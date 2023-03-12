@@ -1,6 +1,5 @@
-@mixin font($size, $height: 2 * $size, $weight: $weight-regular, $style: normal) {
+@mixin font($size, $weight, $color) {
   font-size: $size;
-  line-height: $height;
   font-weight: $weight;
-  font-style: $style;
+  color: $color;
 }

@@ -1,0 +1,39 @@
+.header {
+  padding: 1.5rem;
+  border-bottom: 2px solid $colorGrayLight;
+
+  &__wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  &__logo {
+    max-width: 10rem;
+    width: 100%;
+  }
+}
+
+.nav {
+  &__list {
+    display: flex;
+  }
+
+  &__item {
+    margin-right: 3rem;
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+
+  &__link {
+    @include font(2rem, $fontMedium, $colorBlack);
+    text-transform: uppercase;
+    transition: all 0.3s ease;
+
+    &:hover {
+      color: $colorBlue;
+    }
+  }
+}
