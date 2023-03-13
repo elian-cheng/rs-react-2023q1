@@ -5,7 +5,10 @@
 @import './theme/base/common';
 @import './theme/base/fonts';
 
+@import './pages/HomePage/HomePage';
 @import './pages/ErrorPage/ErrorPage';
 @import './pages/HomePage/components/SearchForm/SearchForm';
+@import './pages/HomePage/components/ProductCardList/ProductCardList';
+@import './pages/HomePage/components/ProductCard/ProductCard';
 @import './components/Header/Header';
 @import './components/Footer/Footer';

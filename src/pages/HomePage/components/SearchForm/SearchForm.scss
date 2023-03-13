@@ -1,12 +1,12 @@
 .search-form {
   box-shadow: $searchShadow;
+  min-width: 290px;
   max-width: 600px;
-  margin: 0 auto;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   padding: 10px;
-  margin-top: 30px;
+  margin-top: 10px;
   border-radius: 10px;
   &__input {
     flex-basis: 100%;
@@ -20,16 +20,4 @@
     background-repeat: no-repeat;
     background-position: left 7px center;
   }
-}
-
-.search-input {
-  font: inherit;
-  padding: 0.5rem;
-  border-radius: 6px;
-  border: 1px solid #000;
-  width: 100%;
-  max-width: 14rem;
-  padding-left: 2.5rem;
-  background: url('../../../../assets/icons/search/search.svg') no-repeat scroll 0.5rem 0.5rem;
-  background-size: 1.2rem;
 }

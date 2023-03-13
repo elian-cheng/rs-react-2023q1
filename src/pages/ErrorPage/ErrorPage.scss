@@ -8,12 +8,11 @@
   top: 12%;
   left: 5%;
   right: 5%;
-  bottom: 12%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: $colorBg;
-  box-shadow: $boxShadow;
+  margin: 20px 0;
 
   &__content {
     max-width: 600px;

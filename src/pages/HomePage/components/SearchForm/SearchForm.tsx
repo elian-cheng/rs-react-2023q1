@@ -13,11 +13,6 @@ export default class SearchForm extends Component<object, ISearchForm> {
     this.handleSearchChange = this.handleSearchChange.bind(this);
   }
 
-  componentDidMount() {
-    const initialSearchValue = localStorage.getItem('ElyteSearch') || '';
-    this.setState({ ElyteSearch: initialSearchValue });
-  }
-
   componentWillUnmount() {
     this.saveToStorage(this.state.ElyteSearch);
   }

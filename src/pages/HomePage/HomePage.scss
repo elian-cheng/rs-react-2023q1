@@ -1,0 +1,12 @@
+.home__top {
+  display: flex;
+  align-items: center;
+  border-bottom: 2px solid $colorGrayLight;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 10px;
+  margin-bottom: 30px;
+  padding-bottom: 20px;
+  row-gap: 10px;
+}

@@ -1,11 +1,13 @@
 .header {
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   border-bottom: 2px solid $colorGrayLight;
 
   &__wrapper {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    row-gap: 10px;
   }
 
   &__logo {
@@ -20,7 +22,7 @@
   }
 
   &__item {
-    margin-right: 3rem;
+    margin-right: 2rem;
 
     &:last-child {
       margin-right: 0;
@@ -28,7 +30,7 @@
   }
 
   &__link {
-    @include font(2rem, $fontMedium, $colorBlack);
+    @include font(1.5rem, $fontMedium, $colorBlack);
     text-transform: uppercase;
     transition: all 0.3s ease;
 

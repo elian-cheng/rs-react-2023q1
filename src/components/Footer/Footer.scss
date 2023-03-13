@@ -1,11 +1,13 @@
 .footer {
-  padding: 1.5rem;
+  padding: 1.5rem 0;
   border-top: 2px solid $colorGrayLight;
 
   &__wrapper {
     align-items: center;
     display: flex;
+    flex-wrap: wrap;
     justify-content: space-between;
+    row-gap: 10px;
     z-index: 5;
   }
 
@@ -32,7 +34,7 @@
   }
 
   &__author-name {
-    @include font(1.5rem, $fontSemiBold, $colorBlack);
+    @include font(1.2rem, $fontSemiBold, $colorBlack);
     @media (max-width: $mobileSmall) {
       display: block;
     }
@@ -51,7 +53,7 @@
 
   &__year {
     cursor: default;
-    @include font(1.5rem, $fontSemiBold, $colorBlack);
+    @include font(1.2rem, $fontSemiBold, $colorBlack);
   }
 
   &__rs-link {

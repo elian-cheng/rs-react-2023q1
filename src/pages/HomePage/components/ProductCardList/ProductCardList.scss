@@ -1,0 +1,11 @@
+.catalog-grid {
+  display: grid;
+  column-gap: 20px;
+  row-gap: 30px;
+  margin-bottom: 30px;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 300px));
+  justify-content: center;
+  @media (max-width: $mobile) {
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  }
+}

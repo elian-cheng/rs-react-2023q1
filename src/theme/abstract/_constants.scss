@@ -1,6 +1,6 @@
 $colorFont: #3a3a3a;
 $colorBg: #f8f8fb;
-$colorGray: #ddd;
+$colorGray: #6f6f6f;
 $colorGrayLight: #e2e2e2;
 $colorGrayDark: #333;
 $colorWhite: #ffffff;
@@ -11,7 +11,8 @@ $colorOrange: #fe9704;
 $colorBlueDark: #303c6c;
 $colorBlue: #69a6ce;
 $searchShadow: 0 0 5px rgba(63, 62, 62, 0.3);
-$boxShadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+$boxShadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+$boxShadowHover: 0 6px 12px rgba(0, 0, 0, 0.15);
 $textShadow: 1px 1px 2px rgba(255, 255, 255, 0.25);
 $textShadowHover: 1px 1px 2px rgba(255, 255, 255, 0.4);
 
