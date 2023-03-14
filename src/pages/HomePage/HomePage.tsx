@@ -7,7 +7,7 @@ export default class HomePage extends Component {
     return (
       <>
         <div className="home__top">
-          <h2>Home</h2>
+          <h2>Catalog</h2>
           <SearchForm />
         </div>
         <ProductCardList />
