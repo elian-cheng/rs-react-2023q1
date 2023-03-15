@@ -64,7 +64,7 @@
     "collectCoverageFrom": [
       "src/**/*.{ts,tsx}",
       "!src/index.tsx",
-      "!src/utils/**"
+      "!src/react-app-env.d.ts"
     ]
   },
   "lint-staged": {
