@@ -24,12 +24,12 @@ describe('Product Card', () => {
     );
   });
 
-  it('should render component correctly', () => {
+  it('should render the component correctly', () => {
     cardItem = screen.getByRole('listitem');
     expect(cardItem).toBeInTheDocument();
   });
 
-  it('should render card props correctly', () => {
+  it('should render the card props correctly', () => {
     expect(screen.getByText(test.title)).toBeInTheDocument();
     expect(screen.getByText(test.rating.toString())).toBeInTheDocument();
     expect(screen.getByText('$' + test.price.toString())).toBeInTheDocument();
