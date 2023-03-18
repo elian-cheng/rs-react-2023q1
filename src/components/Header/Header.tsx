@@ -1,6 +1,22 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 import logo from '../../assets/icons/logo.svg';
+
+interface INavigation {
+  name: string;
+  href: string;
+}
+
+const navigation: INavigation[] = [
+  {
+    name: 'Home',
+    href: '/',
+  },
+  {
+    name: 'About Us',
+    href: '/about',
+  },
+];
 
 export default class Header extends Component {
   render() {
@@ -13,16 +29,18 @@ export default class Header extends Component {
             </Link>
             <nav className="header__nav nav">
               <ul className="nav__list">
-                <li className="nav__item">
-                  <Link className="nav__link" to="/">
-                    Home
-                  </Link>
-                </li>
-                <li className="nav__item">
-                  <Link className="nav__link" to="/about">
-                    About us
-                  </Link>
-                </li>
+                {navigation.map((link) => (
+                  <li key={link.name} className="nav__item">
+                    <NavLink
+                      className={({ isActive }) =>
+                        isActive ? 'nav__link nav__link_active' : 'nav__link'
+                      }
+                      to={link.href}
+                    >
+                      {link.name}
+                    </NavLink>
+                  </li>
+                ))}
               </ul>
             </nav>
           </div>
