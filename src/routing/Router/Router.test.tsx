@@ -45,7 +45,7 @@ describe('Router', () => {
     );
 
     act(() => {
-      const homeLink = screen.getByText(/home/i);
+      const homeLink = screen.getByText('Home');
       homeLink.click();
     });
 

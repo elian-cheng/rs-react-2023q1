@@ -42,7 +42,7 @@ describe('Local Storage', () => {
     userEvent.type(search, value);
     expect(search).toContainHTML(value);
 
-    const aboutLink = screen.getByText(/about us/i);
+    const aboutLink = screen.getByText('About Us');
     userEvent.click(aboutLink);
     expect(setItemMock).toHaveBeenCalledWith(key, value);
   });
@@ -52,8 +52,8 @@ describe('Local Storage', () => {
     userEvent.type(search, value);
     expect(search).toContainHTML(value);
 
-    const aboutLink = screen.getByText(/about us/i);
-    const homeLink = screen.getByText(/home/i);
+    const aboutLink = screen.getByText('About Us');
+    const homeLink = screen.getByText('Home');
 
     userEvent.click(aboutLink);
     userEvent.click(homeLink);

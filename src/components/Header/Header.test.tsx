@@ -12,8 +12,8 @@ describe('Header', () => {
         <Header />
       </BrowserRouter>
     );
-    homeLink = screen.getByText(/home/i);
-    aboutLink = screen.getByText(/about us/i);
+    homeLink = screen.getByText('Home');
+    aboutLink = screen.getByText('About Us');
   });
 
   it('should render the component correctly', () => {
