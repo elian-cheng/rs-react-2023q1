@@ -64,7 +64,7 @@ export default class Header extends Component<object, IHeaderProps> {
       <header className="header">
         <div className="header__container">
           <div className="header__wrapper">
-            <Link to="/">
+            <Link to="/" onClick={this.changePageNameHandler.bind(this)}>
               <img className="header__logo" src={logo} alt="Elyte" />
             </Link>
             <nav className="header__nav nav">
