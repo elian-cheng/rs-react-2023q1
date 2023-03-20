@@ -1,0 +1,41 @@
+import AboutPage from 'pages/AboutPage/AboutPage';
+import ErrorPage from 'pages/ErrorPage/ErrorPage';
+import HomePage from 'pages/HomePage/HomePage';
+import React, { Component } from 'react';
+import { Route, Routes } from 'react-router-dom';
+
+interface IRoute {
+  title: string;
+  path: string;
+  element: React.ReactNode;
+}
+
+const routes: IRoute[] = [
+  {
+    title: 'Home',
+    path: '/',
+    element: <HomePage />,
+  },
+  {
+    title: 'About',
+    path: '/about',
+    element: <AboutPage />,
+  },
+  {
+    title: 'Error',
+    path: '*',
+    element: <ErrorPage />,
+  },
+];
+
+export default class Router extends Component {
+  render() {
+    return (
+      <Routes>
+        {routes.map((route) => (
+          <Route key={route.title} path={route.path} element={route.element} />
+        ))}
+      </Routes>
+    );
+  }
+}
