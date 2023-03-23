@@ -13,7 +13,7 @@ describe('Header', () => {
       </BrowserRouter>
     );
     homeLink = screen.getByText('Home');
-    aboutLink = screen.getByText('About Us');
+    aboutLink = screen.getByText(/About Us/i);
   });
 
   it('should render the component correctly', () => {
@@ -24,6 +24,6 @@ describe('Header', () => {
   });
 
   it('should render navigation links correctly', () => {
-    expect(screen.getAllByRole('link')).toHaveLength(3);
+    expect(screen.getAllByRole('link')).toHaveLength(4);
   });
 });

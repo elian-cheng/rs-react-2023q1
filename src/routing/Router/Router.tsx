@@ -1,5 +1,6 @@
 import AboutPage from 'pages/AboutPage/AboutPage';
 import ErrorPage from 'pages/ErrorPage/ErrorPage';
+import FormPage from 'pages/FormPage/FormPage';
 import HomePage from 'pages/HomePage/HomePage';
 import React, { Component } from 'react';
 import { Route, Routes } from 'react-router-dom';
@@ -20,6 +21,11 @@ const routes: IRoute[] = [
     title: 'About',
     path: '/about',
     element: <AboutPage />,
+  },
+  {
+    title: 'Form',
+    path: '/form',
+    element: <FormPage />,
   },
   {
     title: 'Error',
