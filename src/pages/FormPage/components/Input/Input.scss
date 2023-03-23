@@ -1,0 +1,39 @@
+.input {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+  margin: 12px auto;
+}
+
+.input label {
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.input input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.5rem;
+  outline: none;
+  box-shadow: $boxShadow;
+  // flex-basis: 65%;
+  font-size: inherit;
+  padding: 5px;
+}
+
+.input input:focus {
+  box-shadow: $boxShadowHover;
+}
+
+.input input[type='checkbox'],
+input[type='radio'] {
+  width: 20px;
+  height: 20px;
+  margin-bottom: 0;
+  align-self: start;
+  box-shadow: none;
+}
+.input input[type='file'] {
+  box-shadow: none;
+}

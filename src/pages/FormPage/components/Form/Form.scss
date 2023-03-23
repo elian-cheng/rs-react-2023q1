@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 60px;
+  background-color: $colorWhite;
+  border-radius: 10px;
+  min-width: 550px;
+  font-size: 18px;
+  box-shadow: $boxShadow;
+}
