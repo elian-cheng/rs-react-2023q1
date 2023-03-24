@@ -9,7 +9,7 @@ interface IOrderCardList {
 export default class OrderCardList extends Component<IOrderCardList> {
   render() {
     return (
-      <ul className="">
+      <ul className="orders__list grid">
         {this.props.ordersData.map((order: IFormData, index: number) => {
           return (
             <OrderCard

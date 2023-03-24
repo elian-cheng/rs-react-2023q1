@@ -1,10 +1,4 @@
 .orders {
-  &__wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
   &__form-wrapper {
     display: flex;
     align-items: center;
@@ -19,6 +13,7 @@
   }
 
   &__subtitle {
+    text-align: center;
     font-size: 1.5rem;
     margin-bottom: 3rem;
   }

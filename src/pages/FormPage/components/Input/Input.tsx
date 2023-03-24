@@ -12,7 +12,9 @@ export interface IInputProps {
 const Input = React.forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
   return (
     <div className="input">
-      <label htmlFor={props.input.id}>{props.label}</label>
+      <label htmlFor={props.input.id} className="label-text">
+        {props.label}
+      </label>
       <input ref={ref} {...props.input} />
     </div>
   );

@@ -21,7 +21,7 @@ export default class FormPage extends Component<object, IFormPage> {
 
   render() {
     return (
-      <div className="orders__wrapper">
+      <>
         <div className="orders__form-wrapper">
           <Form setFormState={this.setFormState} />
         </div>
@@ -32,7 +32,7 @@ export default class FormPage extends Component<object, IFormPage> {
           <p className="orders__subtitle">There are no orders yet</p>
         )}
         <OrderCardList ordersData={this.state.ordersData} />
-      </div>
+      </>
     );
   }
 }

@@ -10,8 +10,8 @@ export default class Radio extends Component<IRadio, Record<string, never>> {
   render() {
     const { callYes, callNo } = this.props;
     return (
-      <div>
-        <div>Do you need an order confirmation call?</div>
+      <>
+        <p className="form-info">Do you need an order confirmation call?</p>
         <Input
           label="Yes, I need a call"
           ref={callYes}
@@ -32,7 +32,7 @@ export default class Radio extends Component<IRadio, Record<string, never>> {
             value: 'No',
           }}
         />
-      </div>
+      </>
     );
   }
 }

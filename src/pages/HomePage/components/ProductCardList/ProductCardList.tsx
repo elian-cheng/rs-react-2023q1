@@ -25,6 +25,6 @@ export default class ProductCardList extends Component {
   }
 
   render() {
-    return <ul className="products__catalog catalog-grid">{this.generateCards()}</ul>;
+    return <ul className="products__catalog grid">{this.generateCards()}</ul>;
   }
 }

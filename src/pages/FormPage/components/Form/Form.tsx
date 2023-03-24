@@ -1,9 +1,10 @@
 import Button from 'components/Button/Button';
 import React, { Component, createRef } from 'react';
-import { imageLoader } from 'utils/imageLoader';
+import ReactLogo from '../../../../assets/images/react-logo.png';
 import Input from '../Input/Input';
 import Radio from '../Radio/Radio';
 import Select from '../Select/Select';
+import Switcher from '../Switcher/Switcher';
 
 export interface IFormData {
   name: string;
@@ -12,7 +13,7 @@ export interface IFormData {
   call: string;
   notifications: string;
   image: string | null;
-  consent: boolean;
+  consent: string;
 }
 
 export interface IFormRef {
@@ -73,17 +74,16 @@ export default class Form extends Component<IFormProps, IFormState> {
     const delivery = deliveryRef.current?.value || '';
     const notifications = notificationsRef.current?.checked ? 'Yes' : 'No';
     const call = callYesRef.current?.checked ? 'Yes' : 'No';
-    const consent = consentRef.current?.checked || false;
-    let image: string | null = null;
-    if (imageRef.current?.files) {
-      image = imageLoader(imageRef.current?.files[0]) as string;
-    }
+    const consent = consentRef.current?.checked ? 'Yes' : 'No';
+    const image = imageRef.current?.files?.length
+      ? URL.createObjectURL(imageRef.current.files[0])
+      : ReactLogo;
     this.props.setFormState({ name, date, delivery, notifications, call, image, consent });
   }
 
   render() {
     const { buttonIsDisabled } = this.state;
-    const { name, date, delivery, callYes, callNo, image, consent } = this.formRef;
+    const { name, date, delivery, callYes, callNo, notifications, image, consent } = this.formRef;
     return (
       <form className="form" onSubmit={this.handleSubmit}>
         <Input
@@ -103,8 +103,9 @@ export default class Form extends Component<IFormProps, IFormState> {
           }}
         />
         <Select refTo={delivery} />
+        <p className="form-info">Send the payment proof (photo):</p>
         <Input
-          label="Payment proof:"
+          label=""
           ref={image}
           input={{
             id: 'image',
@@ -112,6 +113,7 @@ export default class Form extends Component<IFormProps, IFormState> {
           }}
         />
         <Radio callYes={callYes} callNo={callNo} />
+        <Switcher refTo={notifications} />
         <Input
           label="Agree to terms & conditions"
           ref={consent}
@@ -120,7 +122,7 @@ export default class Form extends Component<IFormProps, IFormState> {
             type: 'checkbox',
           }}
         />
-        <Button disabled={buttonIsDisabled} type="submit">
+        <Button disabled={buttonIsDisabled} type="submit" className="form__button">
           Submit
         </Button>
       </form>

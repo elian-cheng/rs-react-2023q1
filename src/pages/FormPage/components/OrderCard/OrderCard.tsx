@@ -1,3 +1,4 @@
+import Card from 'components/Card/Card';
 import React, { Component } from 'react';
 import { IFormData } from '../Form/Form';
 
@@ -13,19 +14,38 @@ export default class OrderCard extends Component<IOrderCard> {
   render() {
     const { index, name, date, delivery, call, notifications, image, consent } = this.props;
     return (
-      <li className="">
-        <p className="">{`Order #${index}`}</p>
-        <p className="">{`Name: ${name}`}</p>
-        <p className="">{`Delivery date: ${date}`}</p>
-        <p className="">{`Delivery type: ${delivery}`}</p>
-        <p className="">{`Receive notifications: ${notifications}`}</p>
-        <p className="">{`Need a call: ${call}`}</p>
-        <p className="">{consent && 'Accepted terms & conditions'}</p>
-        <p className="">Payment Proof:</p>
-        <div className="">
-          <img src={image as string} alt="" />
+      <Card>
+        <div className="card__image">
+          <img src={image as string} alt="order-image" />
         </div>
-      </li>
+        <div className="order__content">
+          <p className="order__number">{`Order #${index}`}</p>
+          <p className="order__item">
+            <span className="label-text">Name:</span>
+            {name}
+          </p>
+          <p className="order__item">
+            <span className="label-text">Delivery date:</span>
+            {date}
+          </p>
+          <p className="order__item">
+            <span className="label-text">Delivery type:</span>
+            {delivery}
+          </p>
+          <p className="order__item">
+            <span className="label-text">Need a call:</span>
+            {call}
+          </p>
+          <p className="order__item">
+            <span className="label-text">Receive notifications:</span>
+            {notifications}
+          </p>
+          <p className="order__item">
+            <span className="label-text">Accepted terms:</span>
+            {consent}
+          </p>
+        </div>
+      </Card>
     );
   }
 }
