@@ -1,4 +1,5 @@
 import Button from 'components/Button/Button';
+import Modal from 'components/Modal/Modal';
 import React, { Component, createRef } from 'react';
 import ReactLogo from '../../../../assets/images/react-logo.png';
 import Input from '../Input/Input';
@@ -34,6 +35,8 @@ export interface IFormProps {
 
 export interface IFormState {
   buttonIsDisabled: boolean;
+  modalIsShown: boolean;
+  errors: string[];
 }
 
 export default class Form extends Component<IFormProps, IFormState> {
@@ -42,8 +45,11 @@ export default class Form extends Component<IFormProps, IFormState> {
   constructor(props: IFormProps) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleModalState = this.handleModalState.bind(this);
     this.state = {
       buttonIsDisabled: false,
+      modalIsShown: false,
+      errors: [],
     };
     this.formRef = {
       common: createRef(),
@@ -58,7 +64,13 @@ export default class Form extends Component<IFormProps, IFormState> {
     };
   }
 
-  handleSubmit(e: React.FormEvent) {
+  handleModalState() {
+    this.setState({
+      modalIsShown: !this.state.modalIsShown,
+    });
+  }
+
+  async handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     const {
       name: nameRef,
@@ -79,53 +91,57 @@ export default class Form extends Component<IFormProps, IFormState> {
       ? URL.createObjectURL(imageRef.current.files[0])
       : ReactLogo;
     this.props.setFormState({ name, date, delivery, notifications, call, image, consent });
+    this.setState({ modalIsShown: true });
   }
 
   render() {
     const { buttonIsDisabled } = this.state;
     const { name, date, delivery, callYes, callNo, notifications, image, consent } = this.formRef;
     return (
-      <form className="form" onSubmit={this.handleSubmit}>
-        <Input
-          label="Name:"
-          ref={name}
-          input={{
-            id: 'name',
-            type: 'text',
-          }}
-        />
-        <Input
-          label="Delivery date:"
-          ref={date}
-          input={{
-            id: 'date',
-            type: 'date',
-          }}
-        />
-        <Select refTo={delivery} />
-        <p className="form-info">Send the payment proof (photo):</p>
-        <Input
-          label=""
-          ref={image}
-          input={{
-            id: 'image',
-            type: 'file',
-          }}
-        />
-        <Radio callYes={callYes} callNo={callNo} />
-        <Switcher refTo={notifications} />
-        <Input
-          label="Agree to terms & conditions"
-          ref={consent}
-          input={{
-            id: 'consent',
-            type: 'checkbox',
-          }}
-        />
-        <Button disabled={buttonIsDisabled} type="submit" className="form__button">
-          Submit
-        </Button>
-      </form>
+      <>
+        <form className="form" onSubmit={this.handleSubmit}>
+          <Input
+            label="Name:"
+            ref={name}
+            input={{
+              id: 'name',
+              type: 'text',
+            }}
+          />
+          <Input
+            label="Delivery date:"
+            ref={date}
+            input={{
+              id: 'date',
+              type: 'date',
+            }}
+          />
+          <Select refTo={delivery} />
+          <p className="form-info">Send the payment proof (photo):</p>
+          <Input
+            label=""
+            ref={image}
+            input={{
+              id: 'image',
+              type: 'file',
+            }}
+          />
+          <Radio callYes={callYes} callNo={callNo} />
+          <Switcher refTo={notifications} />
+          <Input
+            label="Agree to terms & conditions"
+            ref={consent}
+            input={{
+              id: 'consent',
+              type: 'checkbox',
+            }}
+          />
+          <Button disabled={buttonIsDisabled} type="submit" className="form__button">
+            Submit
+          </Button>
+        </form>
+        <Modal isActive={this.state.modalIsShown} handleModal={this.handleModalState} />
+      </>
     );
   }
 }
