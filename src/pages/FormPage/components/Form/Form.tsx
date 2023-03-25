@@ -6,10 +6,11 @@ import ReactLogo from '../../../../assets/images/react-logo.png';
 import Radio from '../Radio/Radio';
 import Select from '../Select/Select';
 import Switcher from '../Switcher/Switcher';
+import Validator from '../Validator/Validator';
 
 interface IValidInput {
   isValidDate: boolean;
-  isValidFullNameInput: boolean;
+  isValidName: boolean;
   isValidImage: boolean;
   isValidDelivery: boolean;
   isValidCall: boolean;
@@ -18,7 +19,7 @@ interface IValidInput {
 
 interface IErrorMessages {
   dateErrorMessage: string;
-  fullNameInputErrorMessage: string;
+  nameErrorMessage: string;
   imageErrorMessage: string;
   deliveryErrorMessage: string;
   callErrorMessage: string;
@@ -33,7 +34,7 @@ interface IValidation {
 const VALID_STATE: IValidation = {
   validityInputs: {
     isValidDate: true,
-    isValidFullNameInput: true,
+    isValidName: true,
     isValidImage: true,
     isValidDelivery: true,
     isValidCall: true,
@@ -41,7 +42,7 @@ const VALID_STATE: IValidation = {
   },
   errorMessages: {
     dateErrorMessage: '',
-    fullNameInputErrorMessage: '',
+    nameErrorMessage: '',
     imageErrorMessage: '',
     deliveryErrorMessage: '',
     callErrorMessage: '',
@@ -161,108 +162,41 @@ export default class Form extends Component<IFormProps, IFormState> {
     }
   }
 
-  async validateDate() {
-    const dateInput = this.formRef.date.current?.value;
-    if (dateInput?.length === 0) {
-      this.setNewValueToState('isValidDate', 'dateErrorMessage', false, 'This field is required');
-      return;
-    }
-    if (this.calculateDate(dateInput) === false) {
-      this.setNewValueToState(
-        'isValidDate',
-        'dateErrorMessage',
-        false,
-        'Please, select a date in the future'
-      );
-      return;
-    }
-
-    this.setNewValueToState('isValidDate', 'dateErrorMessage', true, '');
+  async validateName() {
+    const name = this.formRef.name.current?.value;
+    const { isValid, errorMessage } = Validator.validateName(name || '');
+    this.setNewValueToState('isValidName', 'nameErrorMessage', isValid, errorMessage);
   }
 
-  async validateName() {
-    const fullNameInput = this.formRef.name.current?.value;
-    const isValidLength = /^.{5,20}$/.test(fullNameInput ? fullNameInput : '');
-    const isValidLetters = /^[a-zA-Z]+$/.test(fullNameInput ? fullNameInput.replace(/ /g, '') : '');
-    if (!isValidLength) {
-      this.setNewValueToState(
-        'isValidFullNameInput',
-        'fullNameInputErrorMessage',
-        false,
-        'Full name must be from 5 to 20 symbols'
-      );
-      return;
-    }
-    if (!isValidLetters) {
-      this.setNewValueToState(
-        'isValidFullNameInput',
-        'fullNameInputErrorMessage',
-        false,
-        'Full name must contain only English letters'
-      );
-      return;
-    }
-    this.setNewValueToState('isValidFullNameInput', 'fullNameInputErrorMessage', true, '');
+  async validateDate() {
+    const date = this.formRef.date.current?.value;
+    const { isValid, errorMessage } = Validator.validateDate(date || '');
+    this.setNewValueToState('isValidDate', 'dateErrorMessage', isValid, errorMessage);
   }
 
   async validateImage() {
-    const fileInput = this.formRef.image.current?.files;
-    const acceptExts = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg'];
-    if (fileInput?.length === 0) {
-      this.setNewValueToState('isValidImage', 'imageErrorMessage', false, 'This field is required');
-      return;
-    }
-    if (fileInput && fileInput[0] && !acceptExts.some((ext) => ext === fileInput[0].type)) {
-      this.setNewValueToState(
-        'isValidImage',
-        'imageErrorMessage',
-        false,
-        'Image must be in png, jpeg or gif format'
-      );
-      return;
-    }
-
-    this.setNewValueToState('isValidImage', 'imageErrorMessage', true, '');
+    const image = this.formRef.image.current?.files;
+    const { isValid, errorMessage } = Validator.validateImage(image || null);
+    this.setNewValueToState('isValidImage', 'imageErrorMessage', isValid, errorMessage);
   }
 
   async validateDelivery() {
     const delivery = this.formRef.delivery.current?.value;
-
-    if (delivery === 'default') {
-      this.setNewValueToState(
-        'isValidDelivery',
-        'deliveryErrorMessage',
-        false,
-        'This field is required'
-      );
-      return;
-    }
-    this.setNewValueToState('isValidDelivery', 'deliveryErrorMessage', true, '');
+    const { isValid, errorMessage } = Validator.validateDelivery(delivery || '');
+    this.setNewValueToState('isValidDelivery', 'deliveryErrorMessage', isValid, errorMessage);
   }
 
   async validateCall() {
     const callYes = this.formRef.callYes.current?.checked;
     const callNo = this.formRef.callNo.current?.checked;
-
-    if (!callYes && !callNo) {
-      this.setNewValueToState('isValidCall', 'callErrorMessage', false, 'This field is required');
-      return;
-    }
-    this.setNewValueToState('isValidCall', 'callErrorMessage', true, '');
+    const { isValid, errorMessage } = Validator.validateCall(callYes || callNo || false);
+    this.setNewValueToState('isValidCall', 'callErrorMessage', isValid, errorMessage);
   }
 
   async validateConsent() {
     const consent = this.formRef.consent.current?.checked;
-    if (!consent) {
-      this.setNewValueToState(
-        'isValidConsent',
-        'consentErrorMessage',
-        false,
-        'This field is required'
-      );
-      return;
-    }
-    this.setNewValueToState('isValidConsent', 'consentErrorMessage', true, '');
+    const { isValid, errorMessage } = Validator.validateConsent(consent || false);
+    this.setNewValueToState('isValidConsent', 'consentErrorMessage', isValid, errorMessage);
   }
 
   setNewValueToState(
@@ -284,13 +218,6 @@ export default class Form extends Component<IFormProps, IFormState> {
     });
   }
 
-  calculateDate(date: string | undefined) {
-    if (date) {
-      return Date.parse(date) - Number(new Date()) > 0;
-    }
-    return false;
-  }
-
   render() {
     const { name, date, delivery, callYes, callNo, notifications, image, consent } = this.formRef;
     return (
@@ -299,8 +226,8 @@ export default class Form extends Component<IFormProps, IFormState> {
           <Input
             label="Name:"
             ref={name}
-            errorMessage={this.state.errorMessages.fullNameInputErrorMessage}
-            isValid={this.state.validityInputs.isValidFullNameInput}
+            errorMessage={this.state.errorMessages.nameErrorMessage}
+            isValid={this.state.validityInputs.isValidName}
             input={{
               id: 'name',
               type: 'text',

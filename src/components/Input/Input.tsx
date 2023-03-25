@@ -14,13 +14,20 @@ export interface IInputProps {
 const Input = React.forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
   const { label, input, errorMessage, isValid } = props;
   return (
-    <div className="input">
-      <label htmlFor={input.id} className="label-text">
-        {label}
-      </label>
-      <input ref={ref} name={input.id} {...props.input} className={!isValid ? 'input-error' : ''} />
+    <>
+      <div className="input">
+        <label htmlFor={input.id} className="label-text">
+          {label}
+        </label>
+        <input
+          ref={ref}
+          name={input.id}
+          {...props.input}
+          className={!isValid ? 'input-error' : ''}
+        />
+      </div>
       <p className="error-message">{errorMessage}</p>
-    </div>
+    </>
   );
 });
 export default Input;
