@@ -6,11 +6,13 @@ import App from 'App';
 
 describe('Router', () => {
   it('should navigate to HomePage when clicking the logo', () => {
-    render(
-      <MemoryRouter initialEntries={['/about']}>
-        <App />
-      </MemoryRouter>
-    );
+    act(() => {
+      render(
+        <MemoryRouter initialEntries={['/about']}>
+          <App />
+        </MemoryRouter>
+      );
+    });
 
     act(() => {
       const homeLink = document.querySelector('.header__logo');
@@ -22,11 +24,13 @@ describe('Router', () => {
   });
 
   it('should navigate to AboutPage from HomePage', () => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <App />
-      </MemoryRouter>
-    );
+    act(() => {
+      render(
+        <MemoryRouter initialEntries={['/']}>
+          <App />
+        </MemoryRouter>
+      );
+    });
 
     act(() => {
       const aboutLink = screen.getByText(/about us/i);
@@ -38,11 +42,13 @@ describe('Router', () => {
   });
 
   it('should navigate to HomePage from AboutPage', () => {
-    render(
-      <MemoryRouter initialEntries={['/about']}>
-        <App />
-      </MemoryRouter>
-    );
+    act(() => {
+      render(
+        <MemoryRouter initialEntries={['/about']}>
+          <App />
+        </MemoryRouter>
+      );
+    });
 
     act(() => {
       const homeLink = screen.getByText('Home');
@@ -56,11 +62,13 @@ describe('Router', () => {
   });
 
   it('should navigate to ErrorPage on the wrong URL', () => {
-    render(
-      <MemoryRouter initialEntries={['/test']}>
-        <App />
-      </MemoryRouter>
-    );
+    act(() => {
+      render(
+        <MemoryRouter initialEntries={['/test']}>
+          <App />
+        </MemoryRouter>
+      );
+    });
 
     const errorElement = document.getElementById('error-page');
     const errorNumber = screen.getByText('404');

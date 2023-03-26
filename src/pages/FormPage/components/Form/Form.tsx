@@ -222,7 +222,12 @@ export default class Form extends Component<IFormProps, IFormState> {
     const { name, date, delivery, callYes, callNo, notifications, image, consent } = this.formRef;
     return (
       <>
-        <form className="form" onSubmit={this.handleSubmit} ref={this.formRef.common}>
+        <form
+          className="form"
+          onSubmit={this.handleSubmit}
+          ref={this.formRef.common}
+          data-testid="form"
+        >
           <Input
             label="Name:"
             ref={name}

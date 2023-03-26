@@ -2,11 +2,14 @@ import React from 'react';
 import { render, screen, within } from '@testing-library/react';
 import ProductCardList from './ProductCardList';
 import productData from 'utils/productData';
+import { act } from 'react-dom/test-utils';
 
 describe('Product Card list', () => {
   let list: HTMLElement;
   beforeEach(() => {
-    render(<ProductCardList />);
+    act(() => {
+      render(<ProductCardList />);
+    });
     list = screen.getByRole('list');
   });
 

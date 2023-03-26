@@ -2,11 +2,14 @@ import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
 import SearchForm from './SearchForm';
 import userEvent from '@testing-library/user-event';
+import { act } from 'react-dom/test-utils';
 
 describe('Search Form', () => {
   let search: HTMLInputElement;
   beforeEach(() => {
-    render(<SearchForm />);
+    act(() => {
+      render(<SearchForm />);
+    });
     search = screen.getByRole('searchbox');
   });
 
@@ -17,20 +20,21 @@ describe('Search Form', () => {
   });
 
   it('should change the input value', () => {
-    userEvent.type(search, 'testing');
+    act(() => {
+      userEvent.type(search, 'testing');
+    });
     expect(search).toContainHTML('testing');
-    fireEvent.change(search, { target: { value: 'test' } });
+    act(() => {
+      fireEvent.change(search, { target: { value: 'test' } });
+    });
     expect(search).toContainHTML('test');
   });
 
   it('should have input element focus', () => {
     expect(search).not.toHaveFocus();
-    search.focus();
+    act(() => {
+      search.focus();
+    });
     expect(search).toHaveFocus();
   });
-
-  // it('should call localStorage getItem on mount', () => {
-  //   render(<SearchForm />);
-  //   expect(window.localStorage.getItem).toHaveBeenCalledTimes(1);
-  // });
 });

@@ -2,26 +2,29 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import productData from 'utils/productData';
 import ProductCard from './ProductCard';
+import { act } from 'react-dom/test-utils';
 
 describe('Product Card', () => {
   let cardItem: HTMLElement;
   const test = productData[0];
   beforeEach(() => {
-    render(
-      <ProductCard
-        id={test.id}
-        title={test.title}
-        price={test.price}
-        discountPercentage={test.discountPercentage}
-        description={test.description}
-        rating={test.rating}
-        stock={test.stock}
-        color={test.color}
-        brand={test.brand}
-        category={test.category}
-        image={test.image}
-      />
-    );
+    act(() => {
+      render(
+        <ProductCard
+          id={test.id}
+          title={test.title}
+          price={test.price}
+          discountPercentage={test.discountPercentage}
+          description={test.description}
+          rating={test.rating}
+          stock={test.stock}
+          color={test.color}
+          brand={test.brand}
+          category={test.category}
+          image={test.image}
+        />
+      );
+    });
   });
 
   it('should render the component correctly', () => {

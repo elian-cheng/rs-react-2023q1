@@ -16,6 +16,7 @@ export default class Select extends Component<ISelect, Record<string, never>> {
             Delivery Type:
           </label>
           <select
+            data-testid="deliverySelect"
             name="Delivery"
             ref={refTo}
             className={!isValid ? 'select__options input-error' : 'select__options'}
@@ -30,7 +31,9 @@ export default class Select extends Component<ISelect, Record<string, never>> {
             <option>Post office</option>
           </select>
         </div>
-        <p className="error-message">{errorMessage}</p>
+        <p className="error-message" data-testid="deliverySelectError">
+          {errorMessage}
+        </p>
       </>
     );
   }

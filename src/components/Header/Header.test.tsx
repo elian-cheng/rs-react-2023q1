@@ -2,16 +2,19 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Header from './Header';
+import { act } from 'react-dom/test-utils';
 
 describe('Header', () => {
   let homeLink: HTMLElement;
   let aboutLink: HTMLElement;
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <Header />
-      </BrowserRouter>
-    );
+    act(() => {
+      render(
+        <BrowserRouter>
+          <Header />
+        </BrowserRouter>
+      );
+    });
     homeLink = screen.getByText('Home');
     aboutLink = screen.getByText(/About Us/i);
   });

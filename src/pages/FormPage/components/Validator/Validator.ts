@@ -1,4 +1,4 @@
-interface IValidationResult {
+export interface IValidationResult {
   isValid: boolean;
   errorMessage: string;
 }
@@ -41,13 +41,17 @@ const Validator: IValidator = {
   },
 
   validateImage: (image: FileList | null) => {
-    const acceptExts = ['image/png', 'image/jpeg', 'image/gif', 'image/jpg'];
     if (!image || image.length === 0) {
       return { isValid: false, errorMessage: 'This field is required' };
     }
 
-    if (image && image[0] && !acceptExts.some((ext) => ext === image[0].type)) {
-      return { isValid: false, errorMessage: 'Image must be in png, jpeg or gif format' };
+    const allowedTypes = ['image/png', 'image/jpeg', 'image/gif'];
+
+    if (image && image[0] && !allowedTypes.includes(image[0].type)) {
+      return {
+        isValid: false,
+        errorMessage: 'Image must be in png, jpeg or gif format',
+      };
     }
 
     return { isValid: true, errorMessage: '' };

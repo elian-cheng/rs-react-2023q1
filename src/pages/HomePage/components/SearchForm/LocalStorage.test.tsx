@@ -3,6 +3,7 @@ import { screen, render } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from 'App';
 import { MemoryRouter } from 'react-router-dom';
+import { act } from 'react-dom/test-utils';
 
 const mockLocalStorage = () => {
   const setItemMock = jest.fn();
@@ -29,34 +30,42 @@ describe('Local Storage', () => {
   const value = 'test';
 
   beforeEach(() => {
-    render(
-      <MemoryRouter initialEntries={['/']}>
-        <App />
-      </MemoryRouter>
-    );
+    act(() => {
+      render(
+        <MemoryRouter initialEntries={['/']}>
+          <App />
+        </MemoryRouter>
+      );
+    });
     search = screen.getByRole('searchbox');
   });
 
   it('should save input value to localStorage on the component unmount', () => {
     expect(search).toContainHTML('');
-    userEvent.type(search, value);
+    act(() => {
+      userEvent.type(search, value);
+    });
     expect(search).toContainHTML(value);
-
     const aboutLink = screen.getByText(/About Us/i);
-    userEvent.click(aboutLink);
+    act(() => {
+      userEvent.click(aboutLink);
+    });
     expect(setItemMock).toHaveBeenCalledWith(key, value);
   });
 
   it('should get input value from localstorage on the component mount', () => {
     expect(search).toContainHTML('');
-    userEvent.type(search, value);
+    act(() => {
+      userEvent.type(search, value);
+    });
     expect(search).toContainHTML(value);
-
     const aboutLink = screen.getByText('About Us');
     const homeLink = screen.getByText('Home');
 
-    userEvent.click(aboutLink);
-    userEvent.click(homeLink);
+    act(() => {
+      userEvent.click(aboutLink);
+      userEvent.click(homeLink);
+    });
 
     expect(getItemMock).toHaveBeenCalledTimes(1);
     expect(getItemMock).toHaveBeenCalledWith(key);

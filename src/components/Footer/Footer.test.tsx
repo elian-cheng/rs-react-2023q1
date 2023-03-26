@@ -2,14 +2,17 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import Footer from './Footer';
+import { act } from 'react-dom/test-utils';
 
 describe('Footer', () => {
   beforeEach(() => {
-    render(
-      <BrowserRouter>
-        <Footer />
-      </BrowserRouter>
-    );
+    act(() => {
+      render(
+        <BrowserRouter>
+          <Footer />
+        </BrowserRouter>
+      );
+    });
   });
 
   it('should render the component correctly', () => {
