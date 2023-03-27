@@ -46,7 +46,7 @@ describe('Local Storage', () => {
       userEvent.type(search, value);
     });
     expect(search).toContainHTML(value);
-    const aboutLink = screen.getByText(/About Us/i);
+    const aboutLink = screen.getByText('About');
     act(() => {
       userEvent.click(aboutLink);
     });
@@ -59,7 +59,7 @@ describe('Local Storage', () => {
       userEvent.type(search, value);
     });
     expect(search).toContainHTML(value);
-    const aboutLink = screen.getByText('About Us');
+    const aboutLink = screen.getByText('About');
     const homeLink = screen.getByText('Home');
 
     act(() => {

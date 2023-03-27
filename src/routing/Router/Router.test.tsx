@@ -33,7 +33,7 @@ describe('Router', () => {
     });
 
     act(() => {
-      const aboutLink = screen.getByText(/about us/i);
+      const aboutLink = screen.getByText('About');
       aboutLink.click();
     });
 

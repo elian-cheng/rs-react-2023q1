@@ -16,7 +16,7 @@ describe('Header', () => {
       );
     });
     homeLink = screen.getByText('Home');
-    aboutLink = screen.getByText(/About Us/i);
+    aboutLink = screen.getByText('About');
   });
 
   it('should render the component correctly', () => {

@@ -1,8 +1,7 @@
 .header {
-  padding: 1.5rem 0;
-  border-bottom: 2px solid $colorGrayLight;
-
   &__wrapper {
+    padding: 1.5rem 0;
+    border-bottom: 2px solid $colorGrayLight;
     display: flex;
     align-items: center;
     justify-content: space-between;

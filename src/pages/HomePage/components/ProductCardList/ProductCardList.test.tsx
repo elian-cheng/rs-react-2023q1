@@ -8,7 +8,7 @@ describe('Product Card list', () => {
   let list: HTMLElement;
   beforeEach(() => {
     act(() => {
-      render(<ProductCardList />);
+      render(<ProductCardList products={productData} />);
     });
     list = screen.getByRole('list');
   });

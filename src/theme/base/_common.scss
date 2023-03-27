@@ -17,7 +17,6 @@
   justify-content: center;
   align-items: baseline;
   margin: 0.3rem 0;
-  // position: relative;
 }
 
 .select {
@@ -35,8 +34,11 @@
   }
 }
 
-.relative {
-  position: relative;
+.notification-message {
+  font-size: 2rem;
+  line-height: 3rem;
+  margin: 5rem 0;
+  text-align: center;
 }
 
 .label-text {

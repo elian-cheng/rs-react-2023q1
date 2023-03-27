@@ -5,13 +5,14 @@
 }
 .error {
   position: absolute;
-  top: 7%;
+  top: 8%;
   left: 5%;
   right: 5%;
   display: flex;
   align-items: center;
   justify-content: center;
   background: $colorBg;
+  padding: 20px;
   margin: 20px 0;
 
   &__content {

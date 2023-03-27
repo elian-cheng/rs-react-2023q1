@@ -13,7 +13,7 @@ const navigation: INavigation[] = [
     href: '/',
   },
   {
-    name: 'About Us',
+    name: 'About',
     href: '/about',
   },
   {
@@ -22,13 +22,38 @@ const navigation: INavigation[] = [
   },
 ];
 
-export default class Header extends Component {
+interface IHeader {
+  pageTitle: string;
+}
+
+export default class Header extends Component<object, IHeader> {
+  constructor(props: object) {
+    super(props);
+    this.state = { pageTitle: 'HomePage' };
+  }
+
+  componentDidMount() {
+    this.setPageTitle();
+  }
+
+  setPageTitle() {
+    let path = location.href;
+    path = path.slice(path.lastIndexOf('/'));
+    if (path === '/about') {
+      this.setState({ pageTitle: 'AboutPage' });
+    } else if (path === '/form') {
+      this.setState({ pageTitle: 'FormPage' });
+    } else {
+      this.setState({ pageTitle: 'HomePage' });
+    }
+  }
+
   render() {
     return (
       <header className="header">
         <div className="header__container">
           <div className="header__wrapper">
-            <Link to="/">
+            <Link to="/" onClick={() => this.setState({ pageTitle: 'HomePage' })}>
               <img className="header__logo" src={logo} alt="Elyte" />
             </Link>
             <nav className="header__nav nav">
@@ -40,6 +65,7 @@ export default class Header extends Component {
                         isActive ? 'nav__link nav__link_active' : 'nav__link'
                       }
                       to={link.href}
+                      onClick={() => this.setState({ pageTitle: `${link.name + 'Page'}` })}
                     >
                       {link.name}
                     </NavLink>
@@ -48,6 +74,7 @@ export default class Header extends Component {
               </ul>
             </nav>
           </div>
+          <h1>{this.state.pageTitle}</h1>
         </div>
       </header>
     );

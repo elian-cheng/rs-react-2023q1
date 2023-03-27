@@ -1,14 +1,16 @@
 import React from 'react';
 import { fireEvent, render, screen } from '@testing-library/react';
-import SearchForm from './SearchForm';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
+import HomePage from 'pages/HomePage/HomePage';
 
 describe('Search Form', () => {
   let search: HTMLInputElement;
   beforeEach(() => {
     act(() => {
-      render(<SearchForm />);
+      act(() => {
+        render(<HomePage />);
+      });
     });
     search = screen.getByRole('searchbox');
   });

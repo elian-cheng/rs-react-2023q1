@@ -262,6 +262,7 @@ export default class Form extends Component<IFormProps, IFormState> {
             input={{
               id: 'image',
               type: 'file',
+              accept: 'image/png, image/jpeg, image/gif',
             }}
           />
           <Radio
