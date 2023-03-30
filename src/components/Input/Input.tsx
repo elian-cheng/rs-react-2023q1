@@ -6,7 +6,7 @@ export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
 }
 
-interface IFormInput {
+export interface IFormInput {
   label: string;
   input: IInput;
   name: 'name' | 'image' | 'date' | 'delivery' | 'call' | 'notifications' | 'consent';
@@ -15,14 +15,7 @@ interface IFormInput {
   error: FieldError | undefined;
 }
 
-const FormInput: React.FC<IFormInput> = ({
-  label,
-  name,
-  input,
-  validationRules,
-  register,
-  error,
-}) => {
+const Input: React.FC<IFormInput> = ({ label, name, input, validationRules, register, error }) => {
   return (
     <>
       <div className="input">
@@ -35,9 +28,13 @@ const FormInput: React.FC<IFormInput> = ({
           className={error ? 'input-error' : 'form-input'}
         />
       </div>
-      {error && <p className="error-message">{error.message}</p>}
+      {error && (
+        <p className="error-message" data-testid="inputError">
+          {error.message}
+        </p>
+      )}
     </>
   );
 };
 
-export default FormInput;
+export default Input;
