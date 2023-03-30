@@ -1,24 +1,22 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { IFormData } from '../Form/Form';
+import { useController, UseControllerProps } from 'react-hook-form';
 
-export interface ISwitcher {
-  refTo: React.RefObject<HTMLInputElement>;
-}
+const Switcher = (props: UseControllerProps<IFormData, 'notifications'>) => {
+  const { field } = useController(props);
+  return (
+    <>
+      <p className="form-info">Do you want to receive notifications?</p>
+      <div className="switch__wrapper">
+        <span className="switch__label">No</span>
+        <label className="toggle-switch">
+          <input type="checkbox" id="notifications" {...field} />
+          <span className="switch" />
+        </label>
+        <span className="switch__label">Yes</span>
+      </div>
+    </>
+  );
+};
 
-export default class Switcher extends Component<ISwitcher, Record<string, never>> {
-  render() {
-    const { refTo } = this.props;
-    return (
-      <>
-        <p className="form-info">Do you want to receive notifications?</p>
-        <div className="switch__wrapper">
-          <span className="switch__label">No</span>
-          <label className="toggle-switch">
-            <input type="checkbox" ref={refTo} name="notifications" id="notifications" />
-            <span className="switch" />
-          </label>
-          <span className="switch__label">Yes</span>
-        </div>
-      </>
-    );
-  }
-}
+export default Switcher;

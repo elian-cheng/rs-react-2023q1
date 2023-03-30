@@ -1,12 +1,12 @@
 import Button from 'components/Button/Button';
-import React from 'react';
+import React, { FC, MouseEventHandler } from 'react';
 
 export interface IModalProps {
   isActive: boolean;
-  handleModal: () => void;
+  handleModal: MouseEventHandler<HTMLElement>;
 }
 
-const Modal = ({ isActive, handleModal }: IModalProps) => {
+const Modal: FC<IModalProps> = ({ isActive, handleModal }) => {
   const renderModal = () => {
     return (
       <div className="backdrop" onClick={handleModal}>

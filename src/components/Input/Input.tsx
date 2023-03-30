@@ -1,18 +1,28 @@
 import React, { InputHTMLAttributes } from 'react';
+import { IFormData } from 'pages/FormPage/components/Form/Form';
+import { FieldError, UseFormRegister } from 'react-hook-form';
 
 export interface IInput extends InputHTMLAttributes<HTMLInputElement> {
   id: string;
 }
 
-export interface IInputProps {
+interface IFormInput {
   label: string;
   input: IInput;
-  errorMessage: string;
-  isValid: boolean;
+  name: 'name' | 'image' | 'date' | 'delivery' | 'call' | 'notifications' | 'consent';
+  validationRules: Record<string, unknown>;
+  register: UseFormRegister<IFormData>;
+  error: FieldError | undefined;
 }
 
-const Input = React.forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
-  const { label, input, errorMessage, isValid } = props;
+const FormInput: React.FC<IFormInput> = ({
+  label,
+  name,
+  input,
+  validationRules,
+  register,
+  error,
+}) => {
   return (
     <>
       <div className="input">
@@ -20,14 +30,14 @@ const Input = React.forwardRef<HTMLInputElement, IInputProps>((props, ref) => {
           {label}
         </label>
         <input
-          ref={ref}
-          name={input.id}
-          {...props.input}
-          className={!isValid ? 'input-error' : ''}
+          {...register(name, validationRules)}
+          {...input}
+          className={error ? 'input-error' : 'form-input'}
         />
       </div>
-      <p className="error-message">{errorMessage}</p>
+      {error && <p className="error-message">{error.message}</p>}
     </>
   );
-});
-export default Input;
+};
+
+export default FormInput;

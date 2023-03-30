@@ -1,6 +1,6 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from '../Form/Form';
 import { act } from 'react-dom/test-utils';
@@ -24,15 +24,13 @@ describe('Select', () => {
     expect(document.querySelectorAll('option').length).toBe(4);
   });
 
-  it('should not produce errors with the correct select', async () => {
-    act(() => {
-      fireEvent.change(delivery, { target: { value: 'Express' } });
-    });
-    expect(delivery).toContainHTML('Express');
+  it('should produce errors with the incorrect select', async () => {
     act(() => {
       userEvent.click(submitBtn);
     });
     const errorMessage = await screen.findByTestId('deliverySelectError');
-    expect(errorMessage.textContent).toHaveLength(0);
+    expect(errorMessage).toBeInTheDocument();
+
+    expect(errorMessage.textContent).toBe('This field is required');
   });
 });
