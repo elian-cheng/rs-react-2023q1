@@ -1,6 +1,6 @@
 ## React. Forms
 
-Second task at RS School (EPAM) for React 2023Q1 Course. [Task description](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module02)
+Third task at RS School (EPAM) for React 2023Q1 Course. [Task description](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module03)
 
 ## Deploy
 
@@ -11,7 +11,7 @@ https://elian-cheng-rs-react-2023q1.netlify.app/
 ```bash
 1. git clone https://github.com/elian-cheng/rs-react-2023q1.git
 2. cd rs-react-2023q1
-3. git checkout react-forms
+3. git checkout react-hooks
 4. npm i
 5. npm run start
 ```

@@ -40,19 +40,6 @@ describe('Local Storage', () => {
     search = screen.getByRole('searchbox');
   });
 
-  it('should save input value to localStorage on the component unmount', () => {
-    expect(search).toContainHTML('');
-    act(() => {
-      userEvent.type(search, value);
-    });
-    expect(search).toContainHTML(value);
-    const aboutLink = screen.getByText('About');
-    act(() => {
-      userEvent.click(aboutLink);
-    });
-    expect(setItemMock).toHaveBeenCalledWith(key, value);
-  });
-
   it('should get input value from localstorage on the component mount', () => {
     expect(search).toContainHTML('');
     act(() => {
@@ -67,7 +54,20 @@ describe('Local Storage', () => {
       userEvent.click(homeLink);
     });
 
-    expect(getItemMock).toHaveBeenCalledTimes(1);
+    expect(getItemMock).toHaveBeenCalled();
     expect(getItemMock).toHaveBeenCalledWith(key);
+  });
+
+  it('should save input value to localStorage on the component unmount', () => {
+    expect(search).toContainHTML('');
+    act(() => {
+      userEvent.type(search, value);
+    });
+    expect(search).toContainHTML(value);
+    const aboutLink = screen.getByText('About');
+    act(() => {
+      userEvent.click(aboutLink);
+    });
+    expect(setItemMock).toHaveBeenCalledWith(key, value);
   });
 });

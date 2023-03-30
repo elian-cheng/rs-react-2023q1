@@ -1,48 +1,34 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import productData from 'utils/productData';
 import { IProduct } from './components/ProductCard/ProductCard';
 import ProductCardList from './components/ProductCardList/ProductCardList';
 import SearchForm from './components/SearchForm/SearchForm';
-interface IHomePage {
-  search: string;
-  products: IProduct[];
-}
 
-export default class HomePage extends Component<object, IHomePage> {
-  constructor(props: object) {
-    super(props);
-    this.state = {
-      search: localStorage.getItem('ElyteSearch') || '',
-      products: productData,
-    };
-  }
+const HomePage: React.FC = () => {
+  const [search, setSearch] = useState<string>(localStorage.getItem('ElyteSearch') || '');
+  const [products, setProducts] = useState<IProduct[]>(productData);
 
-  handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState({ ...this.state, search: event.target.value });
+  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearch(event.target.value);
   };
 
-  componentWillUnmount() {
-    localStorage.setItem('ElyteSearch', this.state.search);
-  }
-
-  render() {
-    const { search } = this.state;
-    let { products } = this.state;
-
-    if (search) {
-      products = products.filter((product) =>
-        Object.values(product).join('').toLocaleLowerCase().includes(search.toLocaleLowerCase())
-      );
-    }
-
-    return (
-      <>
-        <div className="home__top">
-          <h2>Catalog</h2>
-          <SearchForm onSearchChange={this.handleSearch} searchValue={search} />
-        </div>
-        <ProductCardList products={products} />
-      </>
+  useEffect(() => {
+    localStorage.setItem('ElyteSearch', search);
+    const filteredProducts = productData.filter((product) =>
+      Object.values(product).join('').toLocaleLowerCase().includes(search.toLocaleLowerCase())
     );
-  }
-}
+    setProducts(filteredProducts);
+  }, [search]);
+
+  return (
+    <>
+      <div className="home__top">
+        <h2>Catalog</h2>
+        <SearchForm onSearchChange={handleSearch} searchValue={search} />
+      </div>
+      <ProductCardList products={products} />
+    </>
+  );
+};
+
+export default HomePage;

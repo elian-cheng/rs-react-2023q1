@@ -1,43 +1,51 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ProductCard, { IProduct } from '../ProductCard/ProductCard';
 
 interface IProductCardList {
   products: IProduct[];
 }
 
-export default class ProductCardList extends Component<IProductCardList> {
-  constructor(props: IProductCardList) {
-    super(props);
-  }
-
-  render() {
-    const { products } = this.props;
-
-    return (
-      <>
-        {products.length ? (
-          <ul className="products__catalog grid">
-            {products.map((product) => (
+const ProductCardList: React.FC<IProductCardList> = ({ products }) => {
+  return (
+    <>
+      {products.length ? (
+        <ul className="products__catalog grid">
+          {products.map(
+            ({
+              id,
+              title,
+              description,
+              price,
+              discountPercentage,
+              rating,
+              stock,
+              color,
+              brand,
+              category,
+              image,
+            }) => (
               <ProductCard
-                key={product.id}
-                id={product.id}
-                title={product.title}
-                description={product.description}
-                price={product.price}
-                discountPercentage={product.discountPercentage}
-                rating={product.rating}
-                stock={product.stock}
-                color={product.color}
-                brand={product.brand}
-                category={product.category}
-                image={product.image}
+                key={id}
+                id={id}
+                title={title}
+                description={description}
+                price={price}
+                discountPercentage={discountPercentage}
+                rating={rating}
+                stock={stock}
+                color={color}
+                brand={brand}
+                category={category}
+                image={image}
               />
-            ))}
-          </ul>
-        ) : (
-          <p className="notification-message">Sorry, there are no products found</p>
-        )}
-      </>
-    );
-  }
-}
+            )
+          )}
+        </ul>
+      ) : (
+        <p className="notification-message">Sorry, there are no products found</p>
+      )}
+    </>
+  );
+};
+
+export default ProductCardList;
