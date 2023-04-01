@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, FC } from 'react';
 import productData from 'utils/productData';
 import { IProduct } from './components/ProductCard/ProductCard';
 import ProductCardList from './components/ProductCardList/ProductCardList';
 import SearchForm from './components/SearchForm/SearchForm';
 
-const HomePage: React.FC = () => {
+const HomePage: FC = () => {
   const [search, setSearch] = useState<string>(localStorage.getItem('ElyteSearch') || '');
   const [products, setProducts] = useState<IProduct[]>(productData);
 
@@ -13,7 +13,6 @@ const HomePage: React.FC = () => {
   };
 
   useEffect(() => {
-    localStorage.setItem('ElyteSearch', search);
     const filteredProducts = productData.filter((product) =>
       Object.values(product).join('').toLocaleLowerCase().includes(search.toLocaleLowerCase())
     );
