@@ -45,6 +45,7 @@ describe('Form', () => {
   let image: HTMLInputElement;
   let consent: HTMLInputElement;
   let call: HTMLInputElement;
+  let button: HTMLButtonElement;
   let modal: HTMLElement | null;
   const mockInvalid = mockInvalidForm();
 
@@ -53,31 +54,27 @@ describe('Form', () => {
       const mock = jest.fn();
       render(<Form setFormState={mock} />);
     });
-    await waitFor(() => {
-      form = screen.getByTestId('form');
-      name = screen.getByRole('textbox', { name: /Name:/i });
-      date = document.getElementById('date') as HTMLInputElement;
-      image = document.getElementById('image') as HTMLInputElement;
-      consent = document.getElementById('consent') as HTMLInputElement;
-      call = document.getElementById('call-yes') as HTMLInputElement;
-      delivery = screen.getByRole('combobox');
-      modal = screen.queryByText(/Your order was successfully submitted!/i);
-    });
+    form = screen.getByTestId('form');
+    name = screen.getByRole('textbox', { name: /Name:/i });
+    date = document.getElementById('date') as HTMLInputElement;
+    image = document.getElementById('image') as HTMLInputElement;
+    consent = document.getElementById('consent') as HTMLInputElement;
+    call = screen.getByLabelText('Yes, I need a call');
+    delivery = screen.getByRole('combobox');
+    button = screen.getByRole('button', { name: /Submit/i });
+    modal = screen.queryByText(/Your order was successfully submitted!/i);
   });
 
-  const createCard = (
-    nameValue: string,
-    dateValue: string,
-    deliveryValue: string,
-    imageValue: string
-  ) => {
+  const createCard = (nameValue: string, dateValue: string, deliveryValue: string) => {
     userEvent.type(name, nameValue);
     fireEvent.change(date, { target: { value: dateValue } });
     fireEvent.change(delivery, { target: { value: deliveryValue } });
-    fireEvent.change(image, { target: { value: imageValue } });
-    fireEvent.click(screen.getByText(/Yes, I need a call/i));
+    fireEvent.change(image, {
+      target: { files: [new File([], 'image.png', { type: 'image/png' })] },
+    });
     fireEvent.click(consent);
-    userEvent.click(screen.getByText(/Submit/i));
+    fireEvent.click(call);
+    fireEvent.click(button);
   };
 
   it('should render the component correctly', () => {
@@ -87,53 +84,75 @@ describe('Form', () => {
     expect(checkboxes.length).toBe(2);
     const radios = screen.getAllByRole('radio');
     expect(radios.length).toBe(2);
+    expect(screen.getByLabelText('Name:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Delivery date:')).toBeInTheDocument();
+    expect(screen.getByLabelText('Agree to terms & conditions')).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
   });
 
-  it('should submit the valid form', () => {
+  it('should show validation errors when submitting the form with invalid data', async () => {
     act(() => {
-      createCard('Testing', '2025-05-14', 'Express', '');
+      fireEvent.click(button);
     });
-    expect(name.value).toBe('Testing');
-    expect(date.value).toBe('2025-05-14');
-    expect(delivery.value).toBe('Express');
-    expect(image.value).toBe('');
-    expect(consent.value).toBe('on');
-    expect(call.value).toBe('Yes');
+    await waitFor(() => {
+      expect(screen.getAllByTestId('inputError')).toHaveLength(6);
+    });
   });
 
-  it('should not submit the invalid form', () => {
+  it('should submit the valid form', async () => {
+    act(() => {
+      createCard('Testing', '2025-05-14', 'Express');
+    });
+
+    await waitFor(() => {
+      expect(name.value).toBe('Testing');
+      expect(date.value).toBe('2025-05-14');
+      expect(delivery.value).toBe('Express');
+      expect(image.value).toBe('');
+      expect(consent.value).toBe('on');
+      expect(call.value).toBe('Yes');
+    });
+  });
+
+  it('should not submit the invalid form', async () => {
     let data = mockInvalid[0];
     act(() => {
-      delivery.value = data.delivery;
-      image.value = data.image;
-      consent.value = data.consent;
       userEvent.type(name, data.name);
       userEvent.type(date, data.date);
-      fireEvent.submit(form);
+      userEvent.selectOptions(delivery, data.delivery);
+      userEvent.upload(image, new File([data.image], 'example.png'));
+      userEvent.click(button);
     });
-    expect(modal).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(modal).not.toBeInTheDocument();
+    });
 
     data = mockInvalid[1];
     act(() => {
       name.value = '';
-      delivery.value = data.delivery;
-      image.value = data.image;
       userEvent.type(name, data.name);
       userEvent.clear(date);
+      userEvent.selectOptions(delivery, data.delivery);
+      userEvent.upload(image, new File([data.image], 'example.png'));
       userEvent.click(consent);
-      fireEvent.submit(form);
+      userEvent.click(button);
     });
-    expect(modal).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(modal).not.toBeInTheDocument();
+    });
 
     data = mockInvalid[2];
     act(() => {
-      delivery.value = data.delivery;
-      image.value = data.image;
       userEvent.clear(name);
       userEvent.type(date, data.date);
+      userEvent.selectOptions(delivery, data.delivery);
+      userEvent.upload(image, new File([data.image], 'example.png'));
       userEvent.click(consent);
-      fireEvent.submit(form);
+      userEvent.click(call);
+      userEvent.click(button);
     });
-    expect(modal).not.toBeInTheDocument();
+    await waitFor(() => {
+      expect(modal).not.toBeInTheDocument();
+    });
   });
 });

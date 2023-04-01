@@ -1,40 +1,42 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { FieldError, UseFormRegister } from 'react-hook-form';
+import { IFormData } from '../Form/Form';
 
 interface ISelect {
-  refTo: React.RefObject<HTMLSelectElement>;
-  errorMessage: string;
-  isValid: boolean;
+  validationRules: Record<string, unknown>;
+  register: UseFormRegister<IFormData>;
+  error: FieldError | undefined;
 }
 
-export default class Select extends Component<ISelect, Record<string, never>> {
-  render() {
-    const { refTo, isValid, errorMessage } = this.props;
-    return (
-      <>
-        <div className="select">
-          <label htmlFor="delivery" className="select__label label-text">
-            Delivery Type:
-          </label>
-          <select
-            data-testid="deliverySelect"
-            name="Delivery"
-            ref={refTo}
-            className={!isValid ? 'select__options input-error' : 'select__options'}
-            id="delivery"
-            defaultValue="default"
-          >
-            <option disabled value="default">
-              Choose the delivery type
-            </option>
-            <option>Courier</option>
-            <option>Express</option>
-            <option>Post office</option>
-          </select>
-        </div>
+const Select: React.FC<ISelect> = ({ validationRules, register, error }) => {
+  return (
+    <>
+      <div className="select">
+        <label htmlFor="delivery" className="select__label label-text">
+          Delivery Type:
+        </label>
+        <select
+          data-testid="deliverySelect"
+          {...register('delivery', validationRules)}
+          className={error ? 'select__options input-error' : 'select__options'}
+          id="delivery"
+          defaultValue="default"
+        >
+          <option disabled value="default">
+            Choose the delivery type
+          </option>
+          <option>Courier</option>
+          <option>Express</option>
+          <option>Post office</option>
+        </select>
+      </div>
+      {error && error.type === 'validate' && (
         <p className="error-message" data-testid="deliverySelectError">
-          {errorMessage}
+          This field is required
         </p>
-      </>
-    );
-  }
-}
+      )}
+    </>
+  );
+};
+
+export default Select;

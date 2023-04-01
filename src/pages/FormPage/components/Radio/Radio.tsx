@@ -1,44 +1,44 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Input from '../../../../components/Input/Input';
+import { FieldError, UseFormRegister } from 'react-hook-form';
+import { IFormData } from '../Form/Form';
 
 interface IRadio {
-  callYes: React.RefObject<HTMLInputElement>;
-  callNo: React.RefObject<HTMLInputElement>;
-  errorMessage: string;
-  isValid: boolean;
+  validationRules: Record<string, unknown>;
+  register: UseFormRegister<IFormData>;
+  error: FieldError | undefined;
 }
 
-export default class Radio extends Component<IRadio, Record<string, never>> {
-  render() {
-    const { callYes, callNo, errorMessage, isValid } = this.props;
-    return (
-      <>
-        <p className="form-info">Do you need an order confirmation call?</p>
-        <Input
-          label="Yes, I need a call"
-          ref={callYes}
-          errorMessage={errorMessage}
-          isValid={isValid}
-          input={{
-            id: 'call-yes',
-            name: 'call',
-            type: 'radio',
-            value: 'Yes',
-          }}
-        />
-        <Input
-          label="No, don't call me"
-          ref={callNo}
-          errorMessage={errorMessage}
-          isValid={isValid}
-          input={{
-            id: 'call-no',
-            name: 'call',
-            type: 'radio',
-            value: 'No',
-          }}
-        />
-      </>
-    );
-  }
-}
+const Radio: React.FC<IRadio> = ({ validationRules, register, error }) => {
+  return (
+    <>
+      <p className="form-info">Do you need an order confirmation call?</p>
+      <Input
+        label="Yes, I need a call"
+        name="call"
+        input={{
+          id: 'call-yes',
+          type: 'radio',
+          value: 'Yes',
+        }}
+        validationRules={validationRules}
+        register={register}
+        error={error}
+      />
+      <Input
+        label="No, don't call me"
+        name="call"
+        input={{
+          id: 'call-no',
+          type: 'radio',
+          value: 'No',
+        }}
+        validationRules={validationRules}
+        register={register}
+        error={error}
+      />
+    </>
+  );
+};
+
+export default Radio;
