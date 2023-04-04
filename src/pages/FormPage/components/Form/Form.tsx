@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
 import Modal from 'components/Modal/Modal';
-import ReactLogo from '../../../../assets/images/react-logo.png';
+import defaultImg from '../../../../assets/images/poster.jpg';
 import Radio from '../Radio/Radio';
 import Select from '../Select/Select';
 import Switcher from '../Switcher/Switcher';
@@ -57,7 +57,7 @@ const Form: FC<IFormProps> = ({ setFormState }) => {
     const consent = data.consent ? 'Yes' : 'No';
     const image = data?.image
       ? URL.createObjectURL(data.image[0].slice() as unknown as Blob)
-      : ReactLogo;
+      : defaultImg;
     setFormState({ name, date, delivery, notifications, image, consent, call });
     setModalIsShown(true);
   };

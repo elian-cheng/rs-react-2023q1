@@ -17,7 +17,7 @@ describe('Search Form', () => {
 
   it('should render correctly', () => {
     expect(search).toBeInTheDocument();
-    const searchForm = screen.getByPlaceholderText('Search product here...');
+    const searchForm = screen.getByPlaceholderText('Search movie here...');
     expect(searchForm).toBeInTheDocument();
   });
 
