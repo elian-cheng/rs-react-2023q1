@@ -106,7 +106,6 @@ const HomePage: FC = () => {
   return (
     <>
       <div className="home__top">
-        <h2>Catalog</h2>
         <SearchForm onEnterMovie={renderMovies} />
       </div>
       {renderCards()}

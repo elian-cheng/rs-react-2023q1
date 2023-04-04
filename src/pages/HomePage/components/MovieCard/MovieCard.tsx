@@ -37,23 +37,29 @@ const MovieCard: React.FC<IMovieCard> = ({
   }
 
   return (
-    <Card data-id={cardId}>
+    <Card data-id={cardId} className="movie__card">
       <div className="card__image">
-        <img src={poster} alt={title} />
+        <img src={poster} alt={title} data-testid="card-img" />
       </div>
-      <div className="card__rating">{vote_average.toFixed(1)}</div>
+      <div className="card__rating" data-testid="card-rating">
+        {vote_average.toFixed(1)}
+      </div>
       <div className="card__info">
-        <h3 className="card__title">{title}</h3>
+        <h3 className="card__title" data-testid="card-title">
+          {title}
+        </h3>
         <div className="card__genres">
           {genres.map((genre) => (
-            <p className="card__genre-item" key={genre.id}>
+            <p className="card__genre-item" key={genre.id} data-testid="card-genre">
               {genre.name}
             </p>
           ))}
         </div>
       </div>
       <div className="card__data">
-        <p className="card__date">{date}</p>
+        <p className="card__date" data-testid="card-date">
+          {date}
+        </p>
         <div className="card__views">
           <EyeIcon fill="rgba(0, 0, 0, 0.4)" width="16px" height="16px" />
           <span>{convertLongNumbers(popularity)}</span>

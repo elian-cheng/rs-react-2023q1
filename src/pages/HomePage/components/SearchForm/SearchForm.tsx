@@ -1,3 +1,4 @@
+import Button from 'components/Button/Button';
 import React, { FC, useEffect, useRef, useState } from 'react';
 
 interface ISearchForm {
@@ -22,9 +23,13 @@ const SearchForm: FC<ISearchForm> = ({ onEnterMovie }) => {
     setSearch(event.target.value);
   };
 
-  const handleEnterPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    onEnterMovie(search);
+  };
+
+  const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
       if (event.target instanceof HTMLInputElement) {
         onEnterMovie(event.target.value);
       }
@@ -32,15 +37,16 @@ const SearchForm: FC<ISearchForm> = ({ onEnterMovie }) => {
   };
 
   return (
-    <form action="" className="search-form">
+    <form onSubmit={handleSubmit} className="search-form">
       <input
         className="search-form__input"
         type="search"
         placeholder="Search movie here..."
         value={search}
         onChange={handleSearch}
-        onKeyDown={handleEnterPress}
+        onKeyDown={handleEnter}
       />
+      <Button type="submit">Search</Button>
     </form>
   );
 };

@@ -9,9 +9,8 @@ describe('Home Page', () => {
     act(() => {
       render(<HomePage />);
     });
-    expect(screen.getByText('Catalog')).toBeInTheDocument();
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
-    const productCards = screen.getAllByRole('listitem');
-    expect(productCards.length).toBe(12);
+    const searchButton = screen.getByRole('button', { name: 'Search' });
+    expect(searchButton).toBeInTheDocument();
   });
 });

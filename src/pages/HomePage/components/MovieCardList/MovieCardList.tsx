@@ -8,14 +8,28 @@ export interface IMovieCardList {
 }
 
 const MovieCardList: React.FC<IMovieCardList> = ({ movies, genres }) => {
-  const filterGenres = (genreIds: number[]) => {
-    return genres.filter((genre) => genreIds.find((id) => id === genre.id));
+  // const [isOpenCardModal, setIsOpenCardModal] = useState(false);
+  // const [cardId, setCardId] = useState('');
+
+  const handleOpenModalCard = (e: React.MouseEvent<HTMLUListElement>) => {
+    if (e.target instanceof HTMLElement) {
+      const movieCard: HTMLElement | null = e.target.closest('.movie__card');
+      if (movieCard && movieCard.dataset.id) {
+        // setIsOpenCardModal(true);
+        // setCardId(movieCard.dataset.id);
+      }
+    }
+  };
+
+  const filterGenres = (movieGenreIds: number[]) => {
+    return genres.filter((genre) => movieGenreIds.find((id) => id === genre.id));
   };
 
   return (
     <>
+      {/* {isOpenCardModal && <ModalCard cardId={cardId} onConfirm={() => setIsOpenCardModal(false)} />} */}
       {movies.length ? (
-        <ul className="movie__catalog grid">
+        <ul className="movie__catalog grid" onClick={handleOpenModalCard}>
           {movies.map((movie: IMovies) => (
             <MovieCard
               key={movie.id}
