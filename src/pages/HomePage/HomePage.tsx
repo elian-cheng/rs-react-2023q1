@@ -5,12 +5,12 @@ import { MOVIE_API_KEY } from 'utils/API';
 import MovieCardList from './components/MovieCardList/MovieCardList';
 import SearchForm from './components/SearchForm/SearchForm';
 
-export interface IGenres {
+export interface IGenre {
   id: number;
   name: string;
 }
 
-export interface IMovies {
+export interface IMovie {
   adult: boolean;
   backdrop_path: string;
   genre_ids: Array<number>;
@@ -30,8 +30,8 @@ export interface IMovies {
 const HomePage: FC = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<boolean>(false);
-  const [movies, setMovies] = useState<IMovies[]>([]);
-  const [genres, setGenres] = useState<IGenres[]>([]);
+  const [movies, setMovies] = useState<IMovie[]>([]);
+  const [genres, setGenres] = useState<IGenre[]>([]);
 
   const getGenres = async () => {
     try {
@@ -75,7 +75,7 @@ const HomePage: FC = () => {
   const renderMovies = useCallback((search: string) => {
     setIsLoading(true);
     if (search) {
-      searchMovies(search, 1).then((movies: IMovies[]) => {
+      searchMovies(search, 1).then((movies: IMovie[]) => {
         setMovies(movies);
         setIsLoading(false);
       });
@@ -92,7 +92,7 @@ const HomePage: FC = () => {
     getGenres().then((genres) => setGenres(genres));
   }, [renderMovies]);
 
-  const renderCards = () => {
+  const renderContent = () => {
     if (isError) {
       return (
         <p className="notification-message">
@@ -108,7 +108,7 @@ const HomePage: FC = () => {
       <div className="home__top">
         <SearchForm onEnterMovie={renderMovies} />
       </div>
-      {renderCards()}
+      {renderContent()}
     </>
   );
 };

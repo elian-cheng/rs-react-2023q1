@@ -1,22 +1,23 @@
-import { IGenres, IMovies } from 'pages/HomePage/HomePage';
-import React from 'react';
+import { IGenre, IMovie } from 'pages/HomePage/HomePage';
+import React, { useState } from 'react';
 import MovieCard from '../MovieCard/MovieCard';
+import MovieModal from '../MovieModal/MovieModal';
 
 export interface IMovieCardList {
-  movies: IMovies[];
-  genres: IGenres[];
+  movies: IMovie[];
+  genres: IGenre[];
 }
 
 const MovieCardList: React.FC<IMovieCardList> = ({ movies, genres }) => {
-  // const [isOpenCardModal, setIsOpenCardModal] = useState(false);
-  // const [cardId, setCardId] = useState('');
+  const [modalIsShown, setModalIsShown] = useState(false);
+  const [cardId, setCardId] = useState('');
 
   const handleOpenModalCard = (e: React.MouseEvent<HTMLUListElement>) => {
     if (e.target instanceof HTMLElement) {
       const movieCard: HTMLElement | null = e.target.closest('.movie__card');
       if (movieCard && movieCard.dataset.id) {
-        // setIsOpenCardModal(true);
-        // setCardId(movieCard.dataset.id);
+        setModalIsShown(true);
+        setCardId(movieCard.dataset.id);
       }
     }
   };
@@ -27,10 +28,10 @@ const MovieCardList: React.FC<IMovieCardList> = ({ movies, genres }) => {
 
   return (
     <>
-      {/* {isOpenCardModal && <ModalCard cardId={cardId} onConfirm={() => setIsOpenCardModal(false)} />} */}
+      {modalIsShown && <MovieModal cardId={cardId} handleModal={() => setModalIsShown(false)} />}
       {movies.length ? (
         <ul className="movie__catalog grid" onClick={handleOpenModalCard}>
-          {movies.map((movie: IMovies) => (
+          {movies.map((movie: IMovie) => (
             <MovieCard
               key={movie.id}
               cardId={movie.id}

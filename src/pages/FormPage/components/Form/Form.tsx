@@ -2,11 +2,11 @@ import React, { FC, useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import Button from 'components/Button/Button';
 import Input from 'components/Input/Input';
-import Modal from 'components/Modal/Modal';
 import defaultImg from '../../../../assets/images/poster.jpg';
 import Radio from '../Radio/Radio';
 import Select from '../Select/Select';
 import Switcher from '../Switcher/Switcher';
+import OrderConfirmation from '../OrderConfirmation/OrderConfirmation';
 
 export interface IFormProps {
   setFormState: (state: IFormData) => void;
@@ -154,7 +154,7 @@ const Form: FC<IFormProps> = ({ setFormState }) => {
           Submit
         </Button>
       </form>
-      <Modal isActive={modalIsShown} handleModal={handleModal} />
+      {modalIsShown && <OrderConfirmation handleModal={handleModal} />}
     </>
   );
 };

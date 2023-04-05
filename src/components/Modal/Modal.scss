@@ -2,27 +2,40 @@
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  width: 100%;
+  height: 100vh;
+  z-index: 4;
   background-color: $colorBackdrop;
-  z-index: 5;
 }
 
 .modal {
-  background-color: $colorWhite;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 30px;
-  padding: 40px;
-  border-radius: 10px;
-  font-size: 18px;
-  z-index: 4;
-  animation: slide-down 300ms ease-out forwards;
+  position: fixed;
+  // display: flex;
+  gap: 48px;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  left: 50%;
+  max-width: 1170px;
+  width: 90%;
+  z-index: 100;
+  background-size: cover;
+  padding: 2rem 1rem 1rem 1rem;
+  overflow: auto;
+  background-color: $colorYellow;
+  box-shadow: $boxShadow;
+  border-radius: 16px;
+
+  @media (max-width: $mobile) {
+    height: 80%;
+    gap: 16px;
+    // align-content: flex-start;
+    // flex-wrap: wrap;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    right: 0;
+    bottom: 0;
+  }
 }
 
 @keyframes slide-down {
@@ -34,4 +47,24 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+.modal__close-btn {
+  color: $colorBlueDark;
+  position: absolute;
+  font-size: 4.5rem;
+  line-height: 1rem;
+  background: transparent;
+  top: 15px;
+  right: 2px;
+  cursor: pointer;
+  transition: all 0.3s;
+
+  &:hover {
+    color: $colorGrayDark;
+  }
+}
+
+.modal__content {
+  margin: 0.5rem auto;
 }

@@ -12,3 +12,9 @@ export const convertDate = (date: string, monthOptions?: Intl.DateTimeFormatOpti
   const year = new Date(date).getFullYear();
   return { month, day, year };
 };
+
+export const convertTime = (totalMinutes: number) => {
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  return `${hours}h${minutes}m`;
+};

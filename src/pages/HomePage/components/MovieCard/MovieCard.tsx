@@ -3,16 +3,15 @@ import Card from 'components/Card/Card';
 import { ReactComponent as EyeIcon } from '../../../../assets/icons/movie/eye.svg';
 import defaultImg from '../../../../assets/images/poster.jpg';
 import { convertDate, convertLongNumbers } from 'utils/helpers';
-import { IGenres } from 'pages/HomePage/HomePage';
+import { IGenre } from 'pages/HomePage/HomePage';
 import { MOVIE_POSTER_URL } from 'utils/API';
-
 export interface IMovieCard {
   popularity: number;
   poster_path: string | null;
   release_date: string | null;
   title: string;
   vote_average: number;
-  genres: IGenres[];
+  genres: IGenre[];
   cardId: number;
 }
 
@@ -37,7 +36,7 @@ const MovieCard: React.FC<IMovieCard> = ({
   }
 
   return (
-    <Card data-id={cardId} className="movie__card">
+    <Card dataId={cardId} className="movie__card">
       <div className="card__image">
         <img src={poster} alt={title} data-testid="card-img" />
       </div>

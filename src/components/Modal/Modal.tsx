@@ -1,24 +1,34 @@
-import Button from 'components/Button/Button';
-import React, { FC, MouseEventHandler } from 'react';
+import React, { FC, MouseEventHandler, ReactNode } from 'react';
+import ReactDOM from 'react-dom';
 
 export interface IModalProps {
-  isActive: boolean;
   handleModal: MouseEventHandler<HTMLElement>;
+  children: ReactNode;
 }
 
-const Modal: FC<IModalProps> = ({ isActive, handleModal }) => {
-  const renderModal = () => {
-    return (
-      <div className="backdrop" onClick={handleModal}>
-        <div className="modal">
-          <p className="form-info">Your order was successfully submitted!</p>
-          <Button onClick={handleModal}>Close</Button>
-        </div>
-      </div>
-    );
-  };
+const portalElement = document.getElementById('overlays') as HTMLElement;
 
-  return isActive ? renderModal() : null;
+const ModalOverlay: FC<IModalProps> = ({ handleModal, children }) => {
+  return (
+    <div className="modal">
+      <button className="modal__close-btn" data-testid="modal-close-btn" onClick={handleModal}>
+        &times;
+      </button>
+      <div className="modal__content">{children}</div>
+    </div>
+  );
+};
+
+const Modal: FC<IModalProps> = ({ handleModal, children }) => {
+  return (
+    <>
+      {ReactDOM.createPortal(<div className="backdrop" onClick={handleModal} />, portalElement)}
+      {ReactDOM.createPortal(
+        <ModalOverlay handleModal={handleModal}>{children}</ModalOverlay>,
+        portalElement
+      )}
+    </>
+  );
 };
 
 export default Modal;
