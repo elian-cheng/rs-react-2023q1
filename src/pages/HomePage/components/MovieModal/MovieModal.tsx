@@ -7,7 +7,7 @@ import { convertDate, convertLongNumbers, convertTime } from 'utils/helpers';
 import Modal from 'components/Modal/Modal';
 import { IGenre } from 'pages/HomePage/HomePage';
 
-interface IDetailedMovie {
+export interface IDetailedMovie {
   adult: boolean;
   backdrop_path: string | null;
   belongs_to_collection: {
@@ -74,7 +74,7 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
       setIsLoading(false);
       setIsError(true);
       const error = err as AxiosError;
-      throw new Error(error.message);
+      console.log(error.message);
     }
   }, [cardId]);
 

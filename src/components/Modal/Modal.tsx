@@ -22,10 +22,18 @@ const ModalOverlay: FC<IModalProps> = ({ handleModal, children }) => {
 const Modal: FC<IModalProps> = ({ handleModal, children }) => {
   return (
     <>
-      {ReactDOM.createPortal(<div className="backdrop" onClick={handleModal} />, portalElement)}
-      {ReactDOM.createPortal(
-        <ModalOverlay handleModal={handleModal}>{children}</ModalOverlay>,
-        portalElement
+      {portalElement ? (
+        ReactDOM.createPortal(<div className="backdrop" onClick={handleModal} />, portalElement)
+      ) : (
+        <div className="backdrop" data-testid="backdrop" onClick={handleModal} />
+      )}
+      {portalElement ? (
+        ReactDOM.createPortal(
+          <ModalOverlay handleModal={handleModal}>{children}</ModalOverlay>,
+          portalElement
+        )
+      ) : (
+        <ModalOverlay handleModal={handleModal}>{children}</ModalOverlay>
       )}
     </>
   );

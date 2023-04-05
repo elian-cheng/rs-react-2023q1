@@ -1,25 +1,25 @@
 import React from 'react';
-import { render, screen } from '@testing-library/react';
-import Modal from './Modal';
+import { render, screen, waitFor } from '@testing-library/react';
+import Modal, { IModalProps } from './Modal';
 import { act } from 'react-dom/test-utils';
 
 describe('Modal', () => {
-  let modal: HTMLElement | null;
-
-  const renderModal = () => {
-    act(() => {
-      const mock = jest.fn();
-      render(
-        <Modal handleModal={mock}>
-          <p className="form-info">Your order was successfully submitted!</p>
-        </Modal>
-      );
-    });
-    modal = screen.queryByText(/Your order was successfully submitted!/i);
+  const handleClose = jest.fn();
+  const modalProps: IModalProps = {
+    handleModal: handleClose,
+    children: <div>Modal content</div>,
   };
 
-  it('should render the component correctly', () => {
-    renderModal();
-    expect(modal).toBeInTheDocument();
+  beforeEach(() => {
+    act(() => {
+      render(<Modal {...modalProps} />);
+    });
+  });
+
+  it('should render the component correctly', async () => {
+    await waitFor(() => {
+      expect(screen.getByText('Modal content')).toBeInTheDocument();
+      expect(screen.getByTestId('backdrop')).toBeInTheDocument();
+    });
   });
 });
