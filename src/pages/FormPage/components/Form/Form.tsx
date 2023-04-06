@@ -7,6 +7,7 @@ import Radio from '../Radio/Radio';
 import Select from '../Select/Select';
 import Switcher from '../Switcher/Switcher';
 import OrderConfirmation from '../OrderConfirmation/OrderConfirmation';
+import { useDisableBodyScroll } from 'hooks/useDisableBodyScroll';
 
 export interface IFormProps {
   setFormState: (state: IFormData) => void;
@@ -23,6 +24,7 @@ export interface IFormData {
 
 const Form: FC<IFormProps> = ({ setFormState }) => {
   const [modalIsShown, setModalIsShown] = useState<boolean>(false);
+  useDisableBodyScroll(modalIsShown);
 
   const {
     handleSubmit,

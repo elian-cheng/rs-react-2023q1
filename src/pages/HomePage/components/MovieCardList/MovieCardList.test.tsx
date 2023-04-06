@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, fireEvent, screen } from '@testing-library/react';
+import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import MovieCardList, { IMovieCardList } from '../MovieCardList/MovieCardList';
 import { IMovie, IGenre } from 'pages/HomePage/HomePage';
 import { act } from 'react-dom/test-utils';
@@ -73,16 +73,15 @@ describe('MovieCardList', () => {
     expect(getByText('Sorry, there are no movies found')).toBeInTheDocument();
   });
 
-  it('should show if there is an error on opening the modal', async () => {
+  it('should show the loader on opening the modal', async () => {
     const { getAllByRole } = setup({ movies, genres });
     const movieCards = getAllByRole('listitem');
     act(() => {
       fireEvent.click(movieCards[0]);
     });
-    await screen.findByText('Something went wrong... Check your internet connection.');
 
-    expect(
-      screen.getByText('Something went wrong... Check your internet connection.')
-    ).toBeInTheDocument();
+    await waitFor(() => {
+      expect(screen.getByTestId('loader')).toBeInTheDocument();
+    });
   });
 });

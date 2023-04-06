@@ -1,11 +1,11 @@
 import React, { FC } from 'react';
-import loader from '../../assets/icons/loader/loader.svg';
+import { ReactComponent as LoaderImg } from '../../assets/icons/loader/loader.svg';
 
 const Loader: FC = () => {
   return (
     <div className="loader__wrapper">
       <div className="loader" data-testid="loader">
-        <img src={loader} alt="loader icon" />
+        <LoaderImg />
       </div>
     </div>
   );

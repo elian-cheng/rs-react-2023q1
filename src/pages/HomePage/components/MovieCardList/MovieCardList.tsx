@@ -1,3 +1,4 @@
+import { useDisableBodyScroll } from 'hooks/useDisableBodyScroll';
 import { IGenre, IMovie } from 'pages/HomePage/HomePage';
 import React, { useState } from 'react';
 import MovieCard from '../MovieCard/MovieCard';
@@ -11,6 +12,8 @@ export interface IMovieCardList {
 const MovieCardList: React.FC<IMovieCardList> = ({ movies, genres }) => {
   const [modalIsShown, setModalIsShown] = useState(false);
   const [cardId, setCardId] = useState('');
+
+  useDisableBodyScroll(modalIsShown);
 
   const handleOpenModalCard = (e: React.MouseEvent<HTMLUListElement>) => {
     if (e.target instanceof HTMLElement) {

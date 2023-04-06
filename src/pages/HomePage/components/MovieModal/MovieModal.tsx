@@ -135,15 +135,17 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
           <div className="movie-modal__numbers">
             <p>
               <span className="label-text">Budget:</span>
-              {convertLongNumbers(movie.budget)}
+              {convertLongNumbers(movie.budget) === '0' ? 'N/A' : convertLongNumbers(movie.budget)}
             </p>
             <p>
               <span className="label-text">Revenue:</span>
-              {convertLongNumbers(movie.revenue)}
+              {convertLongNumbers(movie.revenue) === '0'
+                ? 'N/A'
+                : convertLongNumbers(movie.revenue)}
             </p>
             <p>
               <span className="label-text">Rating:</span>
-              {movie.vote_average.toFixed(1)}
+              {movie.vote_average.toFixed(1) === '0.0' ? 'N/A' : movie.vote_average.toFixed(1)}
             </p>
           </div>
           <div className="movie-modal__overview">

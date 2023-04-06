@@ -29,7 +29,7 @@ const MovieCard: React.FC<IMovieCard> = ({
     poster = MOVIE_POSTER_URL + poster_path;
   }
 
-  let date = 'unknown';
+  let date = 'N/A';
   if (release_date) {
     const convertedDate = convertDate(release_date, { month: 'long' });
     date = `${convertedDate.month.slice(0, 3)} ${convertedDate.day}, ${convertedDate.year}`;
@@ -41,7 +41,7 @@ const MovieCard: React.FC<IMovieCard> = ({
         <img src={poster} alt={title} data-testid="card-img" />
       </div>
       <div className="card__rating" data-testid="card-rating">
-        {vote_average.toFixed(1)}
+        {vote_average.toFixed(1) === '0.0' ? 'N/A' : vote_average.toFixed(1)}
       </div>
       <div className="card__info">
         <h3 className="card__title" data-testid="card-title">
