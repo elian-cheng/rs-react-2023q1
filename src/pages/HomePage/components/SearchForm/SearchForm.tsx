@@ -1,5 +1,5 @@
 import Button from 'components/Button/Button';
-import React, { FC, useEffect, useRef, useState } from 'react';
+import React, { FC, useState } from 'react';
 
 interface ISearchForm {
   onEnterMovie: (value: string) => void;
@@ -7,31 +7,25 @@ interface ISearchForm {
 
 const SearchForm: FC<ISearchForm> = ({ onEnterMovie }) => {
   const [search, setSearch] = useState<string>(localStorage.getItem('ElyteSearch') || '');
-  const savedSearch = useRef('');
 
-  useEffect(() => {
-    savedSearch.current = search;
-  }, [search]);
-
-  useEffect(() => {
-    return () => {
-      localStorage.setItem('ElyteSearch', savedSearch.current);
-    };
-  }, []);
-
-  const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
+  };
+
+  const handleSearch = () => {
+    localStorage.setItem('ElyteSearch', search);
+    onEnterMovie(search);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    onEnterMovie(search);
+    handleSearch();
   };
 
   const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       if (event.target instanceof HTMLInputElement) {
-        onEnterMovie(event.target.value);
+        handleSearch();
       }
     }
   };
@@ -43,7 +37,7 @@ const SearchForm: FC<ISearchForm> = ({ onEnterMovie }) => {
         type="search"
         placeholder="Search movie here..."
         value={search}
-        onChange={handleSearch}
+        onChange={handleInputChange}
         onKeyDown={handleEnter}
       />
       <Button type="submit">Search</Button>
