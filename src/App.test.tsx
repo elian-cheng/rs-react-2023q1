@@ -15,7 +15,6 @@ describe('App', () => {
     });
     const header = document.querySelector('header');
     const footer = document.querySelector('footer');
-    expect(screen.getByText('Catalog')).toBeInTheDocument();
     expect(screen.getByRole('searchbox')).toBeInTheDocument();
     expect(header).toBeInTheDocument();
     expect(footer).toBeInTheDocument();

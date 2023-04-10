@@ -1,0 +1,65 @@
+.card {
+  &__info {
+    padding: 7px 7px 10px 7px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    max-width: 100%;
+    flex: 1 1 auto;
+  }
+  &__rating {
+    position: absolute;
+    width: 5.5rem;
+    height: 5.5rem;
+    top: -4px;
+    left: -11px;
+    background: url(../../../../assets/icons/movie/bookmark-fill.svg) no-repeat center;
+    background-size: cover;
+    font-size: 1.4rem;
+    line-height: 400%;
+    padding-left: 1.6rem;
+    font-weight: $fontBold;
+  }
+  &__title {
+    font-size: 1.5rem;
+    font-weight: $fontSemiBold;
+    text-transform: capitalize;
+    margin: 7px 0 15px 0;
+    text-align: center;
+    line-height: 2rem;
+    width: 100%;
+  }
+  &__data {
+    padding: 6px 10px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    font-weight: $fontSemiBold;
+    text-align: center;
+    margin-bottom: 0.5rem;
+    line-height: 2rem;
+  }
+  &__genres {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  &__genre-item {
+    box-shadow: $boxShadow;
+    padding: 0.4rem;
+    text-transform: uppercase;
+    font-weight: $fontMedium;
+    border-radius: 10px;
+    font-size: 0.9rem;
+  }
+  &__views {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+  }
+}

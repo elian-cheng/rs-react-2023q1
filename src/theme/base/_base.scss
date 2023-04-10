@@ -31,19 +31,21 @@ body {
 
 * {
   &::-webkit-scrollbar {
-    width: 5px;
+    width: 7px;
     height: 5px;
   }
   &::-webkit-scrollbar-track {
-    background: $colorGrayDark;
+    border-radius: 10px;
+    background: $colorYellow;
   }
   &::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    background: $colorYellow;
+    background: $colorBlueDark;
+
     transition: background 0.3s ease;
   }
   &::-webkit-scrollbar-thumb:hover {
-    background: $colorYellow;
+    background: $colorGrayDark;
   }
 }
 
@@ -109,7 +111,7 @@ h2 {
   font-weight: $fontSemiBold;
 }
 
-.lock body {
+body.lock {
   overflow: hidden;
   -ms-touch-action: none;
   touch-action: none;

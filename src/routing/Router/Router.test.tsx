@@ -19,7 +19,7 @@ describe('Router', () => {
       homeLink?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
     });
 
-    const homePageContent = screen.getByText('Catalog');
+    const homePageContent = screen.getByText('HomePage');
     expect(homePageContent).toBeInTheDocument();
   });
 
@@ -55,9 +55,9 @@ describe('Router', () => {
       homeLink.click();
     });
 
-    const searchForm = screen.getByPlaceholderText('Search product here...');
+    const searchForm = screen.getByPlaceholderText('Search movie here...');
     expect(searchForm).toBeInTheDocument();
-    const homePageContent = screen.getByText('Catalog');
+    const homePageContent = screen.getByText('HomePage');
     expect(homePageContent).toBeInTheDocument();
   });
 

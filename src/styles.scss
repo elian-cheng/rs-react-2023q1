@@ -10,7 +10,8 @@
 @import './pages/ErrorPage/ErrorPage';
 @import './pages/FormPage/FormPage';
 @import './pages/HomePage/components/SearchForm/SearchForm';
-@import './pages/HomePage/components/ProductCard/ProductCard';
+@import './pages/HomePage/components/MovieCard/MovieCard';
+@import './pages/HomePage/components/MovieModal/MovieModal';
 @import './pages/FormPage/components/Form/Form';
 @import './pages/FormPage/components/Switcher/Switcher';
 @import './pages/FormPage/components/OrderCard/OrderCard';
@@ -20,3 +21,4 @@
 @import './components/Input/Input';
 @import './components/Card/Card';
 @import './components/Modal/Modal';
+@import './components/Loader/Loader';
