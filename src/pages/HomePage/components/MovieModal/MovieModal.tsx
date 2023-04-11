@@ -62,7 +62,7 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState<boolean>(false);
 
-  const getDetailmovie = useCallback(async () => {
+  const getDetailedMovie = useCallback(async () => {
     setIsLoading(true);
     try {
       const movies = await axios.get(
@@ -74,15 +74,15 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
       setIsLoading(false);
       setIsError(true);
       const error = err as AxiosError;
-      console.log(error.message);
+      console.error(error.message);
     }
   }, [cardId]);
 
   useEffect(() => {
-    getDetailmovie().then((movie) => {
+    getDetailedMovie().then((movie) => {
       setMovie(movie);
     });
-  }, [getDetailmovie]);
+  }, [getDetailedMovie]);
 
   const convertedDate = movie?.release_date
     ? convertDate(movie.release_date, { month: '2-digit' })
