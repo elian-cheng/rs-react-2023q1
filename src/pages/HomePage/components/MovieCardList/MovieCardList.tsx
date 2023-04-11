@@ -1,5 +1,6 @@
 import { IGenre, IMovie } from 'pages/HomePage/HomePage';
 import React, { useState } from 'react';
+
 import MovieCard from '../MovieCard/MovieCard';
 import MovieModal from '../MovieModal/MovieModal';
 

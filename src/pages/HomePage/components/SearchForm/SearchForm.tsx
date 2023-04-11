@@ -1,31 +1,31 @@
 import Button from 'components/Button/Button';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
 import React, { FC, useState } from 'react';
+import { setSearch } from 'store/searchSlice';
 
 interface ISearchForm {
   onEnterMovie: (value: string) => void;
 }
 
 const SearchForm: FC<ISearchForm> = ({ onEnterMovie }) => {
-  const [search, setSearch] = useState<string>(localStorage.getItem('ElyteSearch') || '');
+  const dispatch = useAppDispatch();
+  const { search } = useAppSelector((state) => state.search);
+  const [searchValue, setSearchValue] = useState(search);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSearch(event.target.value);
-  };
-
-  const handleSearch = () => {
-    localStorage.setItem('ElyteSearch', search);
-    onEnterMovie(search);
+    setSearchValue(event.target.value);
   };
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    handleSearch();
+    dispatch(setSearch(searchValue));
+    onEnterMovie(searchValue);
   };
 
   const handleEnter = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
       if (event.target instanceof HTMLInputElement) {
-        handleSearch();
+        onEnterMovie(searchValue);
       }
     }
   };
@@ -36,7 +36,7 @@ const SearchForm: FC<ISearchForm> = ({ onEnterMovie }) => {
         className="search-form__input"
         type="search"
         placeholder="Search movie here..."
-        value={search}
+        value={searchValue}
         onChange={handleInputChange}
         onKeyDown={handleEnter}
       />

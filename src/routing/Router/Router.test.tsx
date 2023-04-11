@@ -3,14 +3,18 @@ import { render, screen } from '@testing-library/react';
 import { act } from 'react-dom/test-utils';
 import { MemoryRouter } from 'react-router-dom';
 import App from 'App';
+import { Provider } from 'react-redux';
+import store from 'store';
 
 describe('Router', () => {
   it('should navigate to HomePage when clicking the logo', () => {
     act(() => {
       render(
-        <MemoryRouter initialEntries={['/about']}>
-          <App />
-        </MemoryRouter>
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/about']}>
+            <App />
+          </MemoryRouter>
+        </Provider>
       );
     });
 
@@ -26,9 +30,11 @@ describe('Router', () => {
   it('should navigate to AboutPage from HomePage', () => {
     act(() => {
       render(
-        <MemoryRouter initialEntries={['/']}>
-          <App />
-        </MemoryRouter>
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/']}>
+            <App />
+          </MemoryRouter>
+        </Provider>
       );
     });
 
@@ -44,9 +50,11 @@ describe('Router', () => {
   it('should navigate to HomePage from AboutPage', () => {
     act(() => {
       render(
-        <MemoryRouter initialEntries={['/about']}>
-          <App />
-        </MemoryRouter>
+        <Provider store={store}>
+          <MemoryRouter initialEntries={['/about']}>
+            <App />
+          </MemoryRouter>
+        </Provider>
       );
     });
 
