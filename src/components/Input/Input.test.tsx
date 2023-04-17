@@ -2,10 +2,18 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import Input from './Input';
 import { act } from 'react-dom/test-utils';
+import { vi } from 'vitest';
 
 interface ITestInput {
   id: string;
-  name: 'name' | 'image' | 'date' | 'delivery' | 'call' | 'notifications' | 'consent';
+  name:
+    | 'name'
+    | 'image'
+    | 'date'
+    | 'delivery'
+    | 'call'
+    | 'notifications'
+    | 'consent';
   value: string;
   type: string;
 }
@@ -22,7 +30,7 @@ describe('Input', () => {
 
   const validationRules = {};
 
-  const register = jest.fn();
+  const register = vi.fn();
 
   it('shoult render the component correctly', () => {
     const error = undefined;

@@ -1,16 +1,16 @@
 import React from 'react';
 import { fireEvent, render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import { mocked } from 'jest-mock';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
 import HomePage, { IGenre, IMovie } from './HomePage';
 import { Provider } from 'react-redux';
 import store from 'store';
+import { vi } from 'vitest';
 
-jest.mock('axios');
-const mockedAxios = mocked(axios);
-const mockedAxiosGet = mocked(mockedAxios.get);
+vi.mock('axios');
+const mockedAxios = vi.mocked(axios);
+const mockedAxiosGet = vi.mocked(mockedAxios.get);
 
 describe('Home', () => {
   let testMovies: IMovie[];
@@ -94,7 +94,7 @@ describe('Home', () => {
     );
   });
   afterAll(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it('should render the component correctly', async () => {

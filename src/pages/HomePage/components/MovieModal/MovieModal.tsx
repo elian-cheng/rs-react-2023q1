@@ -69,7 +69,9 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
       {convertedDate.day}/{convertedDate.month}/{convertedDate.year}
     </span>
   ) : null;
-  const posterPath = movie?.poster_path ? MOVIE_POSTER_URL + movie.poster_path : DefaultImg;
+  const posterPath = movie?.poster_path
+    ? MOVIE_POSTER_URL + movie.poster_path
+    : DefaultImg;
   const movieGenres = movie?.genres.length ? (
     <span data-testid="modal-card-genres">
       {movie.genres.map((genre) => genre.name).join(', ')}
@@ -98,7 +100,11 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
     <Modal handleModal={handleModal}>
       <div className="movie-modal" data-testid="movie-modal">
         <div className="movie-modal__image">
-          <img data-testid="movie-modal-poster" src={posterPath} alt={movie.title} />
+          <img
+            data-testid="movie-modal-poster"
+            src={posterPath}
+            alt={movie.title}
+          />
         </div>
         <div className="movie-modal__info">
           <h3 className="movie-modal__title">
@@ -112,7 +118,9 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
           <div className="movie-modal__numbers">
             <p>
               <span className="label-text">Budget:</span>
-              {convertLongNumbers(movie.budget) === '0' ? 'N/A' : convertLongNumbers(movie.budget)}
+              {convertLongNumbers(movie.budget) === '0'
+                ? 'N/A'
+                : convertLongNumbers(movie.budget)}
             </p>
             <p>
               <span className="label-text">Revenue:</span>
@@ -122,7 +130,9 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
             </p>
             <p>
               <span className="label-text">Rating:</span>
-              {movie.vote_average.toFixed(1) === '0.0' ? 'N/A' : movie.vote_average.toFixed(1)}
+              {movie.vote_average.toFixed(1) === '0.0'
+                ? 'N/A'
+                : movie.vote_average.toFixed(1)}
             </p>
           </div>
           <div className="movie-modal__overview">
@@ -133,7 +143,10 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
             {movie.production_companies.map((company) =>
               company.logo_path ? (
                 <span key={company.id}>
-                  <img src={MOVIE_COMPANIES_URL + company.logo_path} alt={company.name} />
+                  <img
+                    src={MOVIE_COMPANIES_URL + company.logo_path}
+                    alt={company.name}
+                  />
                 </span>
               ) : null
             )}

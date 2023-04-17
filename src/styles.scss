@@ -1,9 +1,9 @@
 @import './theme/abstract/constants';
 @import './theme/abstract/mixins';
 
+@import './theme/base/fonts';
 @import './theme/base/base';
 @import './theme/base/common';
-@import './theme/base/fonts';
 
 @import './pages/HomePage/HomePage';
 @import './pages/AboutPage/AboutPage';

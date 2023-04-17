@@ -1,6 +1,6 @@
 import React from 'react';
-import git from '../../assets/icons/footer/github.svg';
-import rss from '../../assets/icons/footer/rss.svg';
+import git from '../../../src/assets/icons/footer/github.svg';
+import rss from '../../../src/assets/icons/footer/rss.svg';
 
 const Footer = (): JSX.Element => {
   return (

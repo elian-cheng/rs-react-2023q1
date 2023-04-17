@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Form from './Form';
 import { act } from 'react-dom/test-utils';
+import { vi } from 'vitest';
 
 export const mockInvalidForm = () => {
   return [
@@ -51,7 +52,7 @@ describe('Form', () => {
 
   beforeEach(async () => {
     act(() => {
-      const mock = jest.fn();
+      const mock = vi.fn();
       render(<Form setFormState={mock} />);
     });
     form = screen.getByTestId('form');
@@ -65,7 +66,11 @@ describe('Form', () => {
     modal = screen.queryByText(/Your order was successfully submitted!/i);
   });
 
-  const createCard = (nameValue: string, dateValue: string, deliveryValue: string) => {
+  const createCard = (
+    nameValue: string,
+    dateValue: string,
+    deliveryValue: string
+  ) => {
     userEvent.type(name, nameValue);
     fireEvent.change(date, { target: { value: dateValue } });
     fireEvent.change(delivery, { target: { value: deliveryValue } });
@@ -86,7 +91,9 @@ describe('Form', () => {
     expect(radios.length).toBe(2);
     expect(screen.getByLabelText('Name:')).toBeInTheDocument();
     expect(screen.getByLabelText('Delivery date:')).toBeInTheDocument();
-    expect(screen.getByLabelText('Agree to terms & conditions')).toBeInTheDocument();
+    expect(
+      screen.getByLabelText('Agree to terms & conditions')
+    ).toBeInTheDocument();
     expect(screen.getByRole('button', { name: 'Submit' })).toBeInTheDocument();
   });
 

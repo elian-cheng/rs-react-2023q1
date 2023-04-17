@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'components/Card/Card';
-import { ReactComponent as EyeIcon } from '../../../../assets/icons/movie/eye.svg';
+import EyeIcon from '../../../../assets/icons/movie/eye.svg';
 import defaultImg from '../../../../assets/images/poster.jpg';
 import { convertDate, convertLongNumbers } from 'utils/helpers';
 import { IGenre } from 'pages/HomePage/HomePage';
@@ -32,7 +32,9 @@ const MovieCard: React.FC<IMovieCard> = ({
   let date = 'N/A';
   if (release_date) {
     const convertedDate = convertDate(release_date, { month: 'long' });
-    date = `${convertedDate.month.slice(0, 3)} ${convertedDate.day}, ${convertedDate.year}`;
+    date = `${convertedDate.month.slice(0, 3)} ${convertedDate.day}, ${
+      convertedDate.year
+    }`;
   }
 
   return (
@@ -49,7 +51,11 @@ const MovieCard: React.FC<IMovieCard> = ({
         </h3>
         <div className="card__genres">
           {genres.map((genre) => (
-            <p className="card__genre-item" key={genre.id} data-testid="card-genre">
+            <p
+              className="card__genre-item"
+              key={genre.id}
+              data-testid="card-genre"
+            >
               {genre.name}
             </p>
           ))}
@@ -60,7 +66,7 @@ const MovieCard: React.FC<IMovieCard> = ({
           {date}
         </p>
         <div className="card__views">
-          <EyeIcon fill="rgba(0, 0, 0, 0.4)" width="16px" height="16px" />
+          <img src={EyeIcon} alt="eye icon" />
           <span>{convertLongNumbers(popularity)}</span>
         </div>
       </div>

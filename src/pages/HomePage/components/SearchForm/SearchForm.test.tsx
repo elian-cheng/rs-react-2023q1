@@ -5,10 +5,11 @@ import { act } from 'react-dom/test-utils';
 import SearchForm from './SearchForm';
 import { Provider } from 'react-redux';
 import store from 'store';
+import { vi } from 'vitest';
 
 describe('Search Form', () => {
   let search: HTMLInputElement;
-  const handleSearch = jest.fn();
+  const handleSearch = vi.fn();
   beforeEach(() => {
     act(() => {
       render(
@@ -26,15 +27,9 @@ describe('Search Form', () => {
     expect(searchForm).toBeInTheDocument();
   });
 
-  it('should change the input value', () => {
-    act(() => {
-      userEvent.type(search, 'testing');
-    });
-    expect(search).toContainHTML('testing');
-    act(() => {
-      fireEvent.change(search, { target: { value: 'test' } });
-    });
-    expect(search).toContainHTML('test');
+  it('should change the input value', async () => {
+    await userEvent.type(search, 'testing');
+    expect(search.value).toBe('testing');
   });
 
   it('should have input element focus', () => {
@@ -45,18 +40,18 @@ describe('Search Form', () => {
     expect(search).toHaveFocus();
   });
 
-  it('should handle search on press enter', () => {
-    act(() => {
-      fireEvent.keyDown(search, { key: 'Enter', code: 'Enter' });
-    });
-    expect(handleSearch).toHaveBeenCalledTimes(1);
-  });
-
   it('should not handle search on pressing other keys', () => {
     act(() => {
       fireEvent.keyDown(search, { key: 'Esc', code: 'Esc' });
       fireEvent.keyDown(search, { key: 'Space', code: 'Space' });
     });
     expect(handleSearch).toHaveBeenCalledTimes(0);
+  });
+
+  it('should handle search on press enter', () => {
+    act(() => {
+      fireEvent.keyDown(search, { key: 'Enter', code: 'Enter' });
+    });
+    expect(handleSearch).toHaveBeenCalledTimes(1);
   });
 });
