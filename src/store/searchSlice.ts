@@ -30,6 +30,7 @@ export const getMovies = createAsyncThunk('search/getMovies', async (page: numbe
     throw new Error(error.message);
   }
 });
+
 export const getGenres = createAsyncThunk('search/getGenres', async () => {
   try {
     const genresRequest = await axios.get(
@@ -77,21 +78,33 @@ export const searchSlice = createSlice({
         state.movies = action.payload;
         state.isLoading = false;
       })
-      .addMatcher(
-        (action) => action.type.endsWith('/pending'),
-        (state) => {
-          state.isLoading = true;
-          state.isError = false;
-        }
-      )
-      .addMatcher(
-        (action) => action.type.endsWith('/rejected'),
-        (state, action) => {
-          state.isError = true;
-          state.isLoading = false;
-          console.error(action.error.message);
-        }
-      );
+      .addCase(getGenres.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(searchMovies.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(getMovies.pending, (state) => {
+        state.isLoading = true;
+        state.isError = false;
+      })
+      .addCase(getGenres.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        console.error(action.error.message);
+      })
+      .addCase(searchMovies.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        console.error(action.error.message);
+      })
+      .addCase(getMovies.rejected, (state, action) => {
+        state.isError = true;
+        state.isLoading = false;
+        console.error(action.error.message);
+      });
   },
 });
 
