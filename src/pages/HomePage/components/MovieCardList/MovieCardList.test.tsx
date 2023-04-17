@@ -3,6 +3,8 @@ import { render, fireEvent, screen, waitFor } from '@testing-library/react';
 import MovieCardList, { IMovieCardList } from '../MovieCardList/MovieCardList';
 import { IMovie, IGenre } from 'pages/HomePage/HomePage';
 import { act } from 'react-dom/test-utils';
+import { Provider } from 'react-redux';
+import store from 'store';
 
 describe('MovieCardList', () => {
   const movies: IMovie[] = [
@@ -54,7 +56,11 @@ describe('MovieCardList', () => {
   ];
 
   const setup = (props: IMovieCardList) => {
-    return render(<MovieCardList {...props} />);
+    return render(
+      <Provider store={store}>
+        <MovieCardList {...props} />
+      </Provider>
+    );
   };
 
   it('should render a list of movie cards', () => {

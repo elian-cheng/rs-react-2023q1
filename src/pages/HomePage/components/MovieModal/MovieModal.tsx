@@ -1,11 +1,11 @@
-import React, { MouseEventHandler, useCallback, useEffect, useState } from 'react';
-import axios, { AxiosError } from 'axios';
+import React, { MouseEventHandler } from 'react';
 import Loader from 'components/Loader/Loader';
-import { MOVIE_API_KEY, MOVIE_COMPANIES_URL, MOVIE_POSTER_URL } from 'utils/API';
+import { MOVIE_COMPANIES_URL, MOVIE_POSTER_URL } from 'utils/API';
 import DefaultImg from '../../../../assets/images/poster.jpg';
 import { convertDate, convertLongNumbers, convertTime } from 'utils/helpers';
 import Modal from 'components/Modal/Modal';
 import { IGenre } from 'pages/HomePage/HomePage';
+import { useGetDetailedMovieQuery } from 'store/modalAPI';
 
 export interface IDetailedMovie {
   adult: boolean;
@@ -58,31 +58,8 @@ type ModalCardProps = {
 };
 
 const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
-  const [movie, setMovie] = useState<IDetailedMovie | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState<boolean>(false);
-
-  const getDetailmovie = useCallback(async () => {
-    setIsLoading(true);
-    try {
-      const movies = await axios.get(
-        `https://api.themoviedb.org/3/movie/${cardId}?api_key=${MOVIE_API_KEY}`
-      );
-      setIsLoading(false);
-      return movies.data;
-    } catch (err: unknown) {
-      setIsLoading(false);
-      setIsError(true);
-      const error = err as AxiosError;
-      console.log(error.message);
-    }
-  }, [cardId]);
-
-  useEffect(() => {
-    getDetailmovie().then((movie) => {
-      setMovie(movie);
-    });
-  }, [getDetailmovie]);
+  const { data, isLoading, isError } = useGetDetailedMovieQuery(cardId);
+  const movie = data;
 
   const convertedDate = movie?.release_date
     ? convertDate(movie.release_date, { month: '2-digit' })

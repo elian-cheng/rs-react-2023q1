@@ -5,6 +5,8 @@ import { mocked } from 'jest-mock';
 import axios from 'axios';
 import { act } from 'react-dom/test-utils';
 import HomePage, { IGenre, IMovie } from './HomePage';
+import { Provider } from 'react-redux';
+import store from 'store';
 
 jest.mock('axios');
 const mockedAxios = mocked(axios);
@@ -97,7 +99,11 @@ describe('Home', () => {
 
   it('should render the component correctly', async () => {
     act(() => {
-      render(<HomePage />);
+      render(
+        <Provider store={store}>
+          <HomePage />
+        </Provider>
+      );
     });
     await waitFor(() => {
       expect(screen.getByRole('searchbox')).toBeInTheDocument();
@@ -108,7 +114,11 @@ describe('Home', () => {
 
   it('should search for the movie when using search input', async () => {
     act(() => {
-      render(<HomePage />);
+      render(
+        <Provider store={store}>
+          <HomePage />
+        </Provider>
+      );
     });
 
     const cardItems = await screen.findAllByRole('listitem');

@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import React from 'react';
+import { addOrder } from 'store/formSlice';
 import Form, { IFormData } from './components/Form/Form';
 import OrderCardList from './components/OrderCardList/OrderCardList';
 
@@ -7,10 +9,11 @@ export interface IFormPage {
 }
 
 const FormPage: React.FC = () => {
-  const [ordersData, setOrdersData] = useState<IFormData[]>([]);
+  const { formData } = useAppSelector((state) => state.form);
+  const dispatch = useAppDispatch();
 
-  const setFormState = (newState: IFormData) => {
-    setOrdersData([newState, ...ordersData]);
+  const setFormState = (order: IFormData) => {
+    dispatch(addOrder(order));
   };
 
   return (
@@ -19,8 +22,8 @@ const FormPage: React.FC = () => {
         <Form setFormState={setFormState} />
       </div>
       <h2 className="orders__title">Your orders:</h2>
-      {ordersData.length ? (
-        <OrderCardList ordersData={ordersData} />
+      {formData.length ? (
+        <OrderCardList ordersData={formData} />
       ) : (
         <p className="orders__subtitle">There are no orders yet</p>
       )}

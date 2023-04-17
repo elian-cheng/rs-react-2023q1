@@ -1,7 +1,7 @@
-import axios, { AxiosError } from 'axios';
 import Loader from 'components/Loader/Loader';
-import React, { useState, useEffect, FC, useCallback } from 'react';
-import { MOVIE_API_KEY } from 'utils/API';
+import { useAppDispatch, useAppSelector } from 'hooks/redux';
+import React, { useEffect, FC, useCallback } from 'react';
+import { getGenres, getMovies, searchMovies } from 'store/searchSlice';
 import MovieCardList from './components/MovieCardList/MovieCardList';
 import SearchForm from './components/SearchForm/SearchForm';
 
@@ -28,69 +28,24 @@ export interface IMovie {
 }
 
 const HomePage: FC = () => {
-  const [isLoading, setIsLoading] = useState(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [movies, setMovies] = useState<IMovie[]>([]);
-  const [genres, setGenres] = useState<IGenre[]>([]);
+  const dispatch = useAppDispatch();
+  const { search, isLoading, isError, movies, genres } = useAppSelector((state) => state.search);
 
-  const getGenres = async () => {
-    try {
-      const genresRequest = await axios.get(
-        `https://api.themoviedb.org/3/genre/movie/list?api_key=${MOVIE_API_KEY}`
-      );
-      return genresRequest.data.genres;
-    } catch (err: unknown) {
-      setIsError(true);
-      const error = err as AxiosError;
-      throw new Error(error.message);
-    }
-  };
-
-  const searchMovies = async (search: string, page: number) => {
-    try {
-      const movies = await axios.get(
-        `https://api.themoviedb.org/3/search/movie?query=${search}&page=${page}&api_key=${MOVIE_API_KEY}`
-      );
-      return movies.data.results;
-    } catch (err) {
-      setIsError(true);
-      const error = err as AxiosError;
-      throw new Error(error.message);
-    }
-  };
-
-  const getMovies = async (page: number) => {
-    try {
-      const moviesRequest = await axios.get(
-        `https://api.themoviedb.org/3/movie/popular?page=${page}&api_key=${MOVIE_API_KEY}`
-      );
-      return moviesRequest.data.results;
-    } catch (err) {
-      setIsError(true);
-      const error = err as AxiosError;
-      throw new Error(error.message);
-    }
-  };
-
-  const renderMovies = useCallback((search: string) => {
-    setIsLoading(true);
-    if (search) {
-      searchMovies(search, 1).then((movies: IMovie[]) => {
-        setMovies(movies);
-        setIsLoading(false);
-      });
-    } else {
-      getMovies(1).then((movies) => {
-        setMovies(movies);
-        setIsLoading(false);
-      });
-    }
-  }, []);
+  const renderMovies = useCallback(
+    (search: string) => {
+      if (search) {
+        dispatch(searchMovies({ search, page: 1 }));
+      } else {
+        dispatch(getMovies(1));
+      }
+    },
+    [dispatch]
+  );
 
   useEffect(() => {
-    renderMovies(localStorage.getItem('ElyteSearch') || '');
-    getGenres().then((genres) => setGenres(genres));
-  }, [renderMovies]);
+    renderMovies(search);
+    dispatch(getGenres());
+  }, [renderMovies, dispatch, search]);
 
   const renderContent = () => {
     if (isError) {

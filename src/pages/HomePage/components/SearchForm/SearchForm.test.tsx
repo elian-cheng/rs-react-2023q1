@@ -3,13 +3,19 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { act } from 'react-dom/test-utils';
 import SearchForm from './SearchForm';
+import { Provider } from 'react-redux';
+import store from 'store';
 
 describe('Search Form', () => {
   let search: HTMLInputElement;
   const handleSearch = jest.fn();
   beforeEach(() => {
     act(() => {
-      render(<SearchForm onEnterMovie={handleSearch} />);
+      render(
+        <Provider store={store}>
+          <SearchForm onEnterMovie={handleSearch} />
+        </Provider>
+      );
     });
     search = screen.getByRole('searchbox');
   });
