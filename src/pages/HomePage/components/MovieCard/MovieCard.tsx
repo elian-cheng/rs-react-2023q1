@@ -32,9 +32,7 @@ const MovieCard: React.FC<IMovieCard> = ({
   let date = 'N/A';
   if (release_date) {
     const convertedDate = convertDate(release_date, { month: 'long' });
-    date = `${convertedDate.month.slice(0, 3)} ${convertedDate.day}, ${
-      convertedDate.year
-    }`;
+    date = `${convertedDate.month.slice(0, 3)} ${convertedDate.day}, ${convertedDate.year}`;
   }
 
   return (
@@ -51,11 +49,7 @@ const MovieCard: React.FC<IMovieCard> = ({
         </h3>
         <div className="card__genres">
           {genres.map((genre) => (
-            <p
-              className="card__genre-item"
-              key={genre.id}
-              data-testid="card-genre"
-            >
+            <p className="card__genre-item" key={genre.id} data-testid="card-genre">
               {genre.name}
             </p>
           ))}

@@ -6,14 +6,7 @@ import { vi } from 'vitest';
 
 interface ITestInput {
   id: string;
-  name:
-    | 'name'
-    | 'image'
-    | 'date'
-    | 'delivery'
-    | 'call'
-    | 'notifications'
-    | 'consent';
+  name: 'name' | 'image' | 'date' | 'delivery' | 'call' | 'notifications' | 'consent';
   value: string;
   type: string;
 }

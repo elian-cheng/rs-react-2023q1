@@ -64,11 +64,7 @@ const Form: FC<IFormProps> = ({ setFormState }) => {
 
   return (
     <>
-      <form
-        className="form"
-        onSubmit={handleSubmit(onSubmit)}
-        data-testid="form"
-      >
+      <form className="form" onSubmit={handleSubmit(onSubmit)} data-testid="form">
         <Input
           label="Name:"
           name="name"

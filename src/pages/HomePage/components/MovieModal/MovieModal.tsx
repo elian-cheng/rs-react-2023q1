@@ -1,11 +1,11 @@
-import React, { MouseEventHandler } from 'react';
+import React, { MouseEventHandler, useCallback, useEffect, useState } from 'react';
+import axios, { AxiosError } from 'axios';
 import Loader from 'components/Loader/Loader';
-import { MOVIE_COMPANIES_URL, MOVIE_POSTER_URL } from 'utils/API';
+import { MOVIE_API_KEY, MOVIE_COMPANIES_URL, MOVIE_POSTER_URL } from 'utils/API';
 import DefaultImg from '../../../../assets/images/poster.jpg';
 import { convertDate, convertLongNumbers, convertTime } from 'utils/helpers';
 import Modal from 'components/Modal/Modal';
 import { IGenre } from 'pages/HomePage/HomePage';
-import { useGetDetailedMovieQuery } from 'store/modalAPI';
 
 export interface IDetailedMovie {
   adult: boolean;
@@ -58,8 +58,31 @@ type ModalCardProps = {
 };
 
 const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
-  const { data, isLoading, isError } = useGetDetailedMovieQuery(cardId);
-  const movie = data;
+  const [movie, setMovie] = useState<IDetailedMovie | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [isError, setIsError] = useState<boolean>(false);
+
+  const getDetailedMovie = useCallback(async () => {
+    setIsLoading(true);
+    try {
+      const movies = await axios.get(
+        `https://api.themoviedb.org/3/movie/${cardId}?api_key=${MOVIE_API_KEY}`
+      );
+      setIsLoading(false);
+      return movies.data;
+    } catch (err: unknown) {
+      setIsLoading(false);
+      setIsError(true);
+      const error = err as AxiosError;
+      console.error(error.message);
+    }
+  }, [cardId]);
+
+  useEffect(() => {
+    getDetailedMovie().then((movie) => {
+      setMovie(movie);
+    });
+  }, [getDetailedMovie]);
 
   const convertedDate = movie?.release_date
     ? convertDate(movie.release_date, { month: '2-digit' })
@@ -69,9 +92,7 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
       {convertedDate.day}/{convertedDate.month}/{convertedDate.year}
     </span>
   ) : null;
-  const posterPath = movie?.poster_path
-    ? MOVIE_POSTER_URL + movie.poster_path
-    : DefaultImg;
+  const posterPath = movie?.poster_path ? MOVIE_POSTER_URL + movie.poster_path : DefaultImg;
   const movieGenres = movie?.genres.length ? (
     <span data-testid="modal-card-genres">
       {movie.genres.map((genre) => genre.name).join(', ')}
@@ -100,11 +121,7 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
     <Modal handleModal={handleModal}>
       <div className="movie-modal" data-testid="movie-modal">
         <div className="movie-modal__image">
-          <img
-            data-testid="movie-modal-poster"
-            src={posterPath}
-            alt={movie.title}
-          />
+          <img data-testid="movie-modal-poster" src={posterPath} alt={movie.title} />
         </div>
         <div className="movie-modal__info">
           <h3 className="movie-modal__title">
@@ -118,9 +135,7 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
           <div className="movie-modal__numbers">
             <p>
               <span className="label-text">Budget:</span>
-              {convertLongNumbers(movie.budget) === '0'
-                ? 'N/A'
-                : convertLongNumbers(movie.budget)}
+              {convertLongNumbers(movie.budget) === '0' ? 'N/A' : convertLongNumbers(movie.budget)}
             </p>
             <p>
               <span className="label-text">Revenue:</span>
@@ -130,9 +145,7 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
             </p>
             <p>
               <span className="label-text">Rating:</span>
-              {movie.vote_average.toFixed(1) === '0.0'
-                ? 'N/A'
-                : movie.vote_average.toFixed(1)}
+              {movie.vote_average.toFixed(1) === '0.0' ? 'N/A' : movie.vote_average.toFixed(1)}
             </p>
           </div>
           <div className="movie-modal__overview">
@@ -143,10 +156,7 @@ const MovieModal = ({ cardId, handleModal }: ModalCardProps) => {
             {movie.production_companies.map((company) =>
               company.logo_path ? (
                 <span key={company.id}>
-                  <img
-                    src={MOVIE_COMPANIES_URL + company.logo_path}
-                    alt={company.name}
-                  />
+                  <img src={MOVIE_COMPANIES_URL + company.logo_path} alt={company.name} />
                 </span>
               ) : null
             )}
