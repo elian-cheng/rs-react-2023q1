@@ -26,7 +26,7 @@ async function createServer(): Promise<express.Application> {
     vite = await import('vite').then((vite) =>
       vite.createServer({
         root,
-        server: { middlewareMode: true },
+        server: { middlewareMode: true, hmr: true },
         appType: 'custom',
       })
     );
@@ -38,8 +38,6 @@ async function createServer(): Promise<express.Application> {
   }
 
   app.use('*', async (req: Request, res: Response) => {
-    // const url = req.originalUrl;
-
     try {
       let template: string;
 

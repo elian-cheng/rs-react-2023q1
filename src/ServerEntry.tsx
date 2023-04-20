@@ -12,8 +12,8 @@ import { StaticRouter } from 'react-router-dom/server';
 import store from 'store';
 import App from './App';
 
-// import Loader from 'components/Loader/Loader';
-// const AppComponent = React.lazy(() => import('./App'));
+import Loader from 'components/Loader/Loader';
+const AppComponent = React.lazy(() => import('./App'));
 
 export function render(req: Request, res: Response, template: string) {
   const html = template.split('<!--app-html-->');
@@ -35,7 +35,11 @@ export function render(req: Request, res: Response, template: string) {
         res.statusCode = 200;
         stream.pipe(res);
       },
-      onShellError() {},
+      onShellError() {
+        res.status(500);
+        res.setHeader('content-type', 'text/html');
+        res.send('<p>Something went wrong</p>');
+      },
       onAllReady() {
         res.write(html[1]);
         res.end();
