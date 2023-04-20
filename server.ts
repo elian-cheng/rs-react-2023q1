@@ -4,6 +4,7 @@ import express, { Request, Response } from 'express';
 import { installGlobals } from '@remix-run/node';
 import cors from 'cors';
 import { fileURLToPath } from 'url';
+import compression from 'compression';
 
 installGlobals();
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -32,32 +33,30 @@ async function createServer(): Promise<express.Application> {
 
     app.use(vite.middlewares);
   } else {
-    app.use(require('compression')());
+    app.use(compression());
     app.use(express.static(resolve('dist/client')));
   }
 
   app.use('*', async (req: Request, res: Response) => {
-    const url = req.originalUrl;
+    // const url = req.originalUrl;
 
     try {
       let template: string;
-      let render: (req: Request) => Promise<string>;
+
+      let render: (req: Request, res: Response, html: string) => void;
 
       if (!isProduction) {
         template = await fsp.readFile(resolve('index.html'), 'utf8');
-        template = (await vite.transformIndexHtml(url, template)) || template;
-        render =
-          (await vite?.ssrLoadModule('src/ServerEntry.tsx').then((m) => m.render)) || (() => '');
+        template = await vite.transformIndexHtml(req.url, template);
+        render = (await vite.ssrLoadModule('src/ServerEntry.tsx')).render;
       } else {
         template = await fsp.readFile(resolve('dist/client/index.html'), 'utf8');
-        render = require(resolve('dist/server/ServerEntry.js')).render;
+        // @ts-ignore
+        render = (await import('dist/server/ServerEntry.js')).render;
       }
 
       try {
-        const appHtml = await render(req);
-        const html = template.replace('<!--app-html-->', appHtml);
-        res.setHeader('Content-Type', 'text/html');
-        return res.status(200).end(html);
+        render(req, res, template);
       } catch (e) {
         if (e instanceof Response && e.status >= 300 && e.status <= 399) {
           return res.redirect(e.status, e.headers.get('Location') as string);
