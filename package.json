@@ -13,10 +13,10 @@
     "lint": "eslint --fix \"src/**/*.{ts,tsx,js,jsx}\"",
     "test": "vitest run --coverage --silent",
     "nyc": "nyc report --reporter=text-summary",
-    "cy": "start-server-and-test start http-get://localhost:3000 cy:open",
+    "cy:dev": "start-server-and-test start http-get://localhost:3000 cy:open",
     "cy:open": "cypress open --e2e --browser chrome",
     "cy:run": "cypress run --e2e",
-    "testing": "start-server-and-test start http://localhost:3000 cy:run"
+    "cy": "start-server-and-test start http://localhost:3000 cy:run"
   },
   "lint-staged": {
     "*.(ts|tsx)": [
@@ -70,6 +70,7 @@
     "@vitest/coverage-istanbul": "^0.29.3",
     "compression": "^1.7.4",
     "cypress": "^12.10.0",
+    "cypress-file-upload": "^5.0.8",
     "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-import": "^2.27.5",

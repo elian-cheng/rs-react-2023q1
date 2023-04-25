@@ -31,7 +31,7 @@ const SearchForm: FC<ISearchForm> = ({ onEnterMovie }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="search-form">
+    <form onSubmit={handleSubmit} className="search-form" data-testid="search-form">
       <input
         className="search-form__input"
         type="search"
