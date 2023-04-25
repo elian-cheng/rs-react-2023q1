@@ -2,9 +2,10 @@ import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import Modal, { IModalProps } from './Modal';
 import { act } from 'react-dom/test-utils';
+import { vi } from 'vitest';
 
 describe('Modal', () => {
-  const handleClose = jest.fn();
+  const handleClose = vi.fn();
   const modalProps: IModalProps = {
     handleModal: handleClose,
     children: <div>Modal content</div>,

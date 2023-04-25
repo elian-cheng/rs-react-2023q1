@@ -31,7 +31,11 @@ const MovieCardList: React.FC<IMovieCardList> = ({ movies, genres }) => {
     <>
       {modalIsShown && <MovieModal cardId={cardId} handleModal={() => setModalIsShown(false)} />}
       {movies.length ? (
-        <ul className="movie__catalog grid" onClick={handleOpenModalCard}>
+        <ul
+          className="movie__catalog grid"
+          onClick={handleOpenModalCard}
+          data-testid="movie-card-list"
+        >
           {movies.map((movie: IMovie) => (
             <MovieCard
               key={movie.id}

@@ -4,6 +4,7 @@ import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import Form from './Form';
 import { act } from 'react-dom/test-utils';
+import { vi } from 'vitest';
 
 export const mockInvalidForm = () => {
   return [
@@ -51,7 +52,7 @@ describe('Form', () => {
 
   beforeEach(async () => {
     act(() => {
-      const mock = jest.fn();
+      const mock = vi.fn();
       render(<Form setFormState={mock} />);
     });
     form = screen.getByTestId('form');

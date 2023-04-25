@@ -1,6 +1,6 @@
-## React. Redux
+## React. SSR
 
-Fifth task at RS School (EPAM) for React 2023Q1 Course. [Task description](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module05)
+Sixth task at RS School (EPAM) for React 2023Q1 Course. [Task description](https://github.com/rolling-scopes-school/tasks/tree/master/react/modules/module06)
 
 ## Deploy
 
@@ -11,7 +11,7 @@ https://elian-cheng-rs-react-2023q1.netlify.app/
 ```bash
 1. git clone https://github.com/elian-cheng/rs-react-2023q1.git
 2. cd rs-react-2023q1
-3. git checkout react-redux
+3. git checkout react-ssr
 4. npm i
 5. npm run start
 ```

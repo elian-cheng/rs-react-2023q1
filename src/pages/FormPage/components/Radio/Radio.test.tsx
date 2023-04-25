@@ -1,10 +1,11 @@
 import React from 'react';
 import { render, screen, fireEvent, act, waitFor } from '@testing-library/react';
 import Radio from './Radio';
+import { vi } from 'vitest';
 
 describe('Radio', () => {
   const validationRules = { required: true };
-  const register = jest.fn();
+  const register = vi.fn();
   const error = undefined;
 
   it('should render ther component correctly', () => {

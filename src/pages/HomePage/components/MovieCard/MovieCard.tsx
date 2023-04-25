@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from 'components/Card/Card';
-import { ReactComponent as EyeIcon } from '../../../../assets/icons/movie/eye.svg';
+import EyeIcon from '../../../../assets/icons/movie/eye.svg';
 import defaultImg from '../../../../assets/images/poster.jpg';
 import { convertDate, convertLongNumbers } from 'utils/helpers';
 import { IGenre } from 'pages/HomePage/HomePage';
@@ -60,7 +60,7 @@ const MovieCard: React.FC<IMovieCard> = ({
           {date}
         </p>
         <div className="card__views">
-          <EyeIcon fill="rgba(0, 0, 0, 0.4)" width="16px" height="16px" />
+          <img src={EyeIcon} alt="eye icon" />
           <span>{convertLongNumbers(popularity)}</span>
         </div>
       </div>

@@ -4,6 +4,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Form from '../Form/Form';
 import { act } from 'react-dom/test-utils';
+import { vi } from 'vitest';
 
 describe('Select', () => {
   let delivery: HTMLSelectElement;
@@ -11,7 +12,7 @@ describe('Select', () => {
 
   beforeEach(() => {
     act(() => {
-      const mock = jest.fn();
+      const mock = vi.fn();
       render(<Form setFormState={mock} />);
     });
     delivery = screen.getByRole('combobox');
